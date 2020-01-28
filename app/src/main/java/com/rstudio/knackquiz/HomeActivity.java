@@ -24,7 +24,8 @@ public class HomeActivity extends AppCompatActivity {
         initUI();
     }
 
-    private void initUI() {  final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
+    private void initUI() {
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -107,15 +108,13 @@ public class HomeActivity extends AppCompatActivity {
         navigationTabBar.setIsTitled(true);
 
 
-
-
         //navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ACTIVE);
         //navigationTabBar.setTypeface("fonts/custom_font.ttf");
         navigationTabBar.setIsBadged(false);
         navigationTabBar.setIsSwiped(true);
 
 
-
+        navigationTabBar.setModelIndex(0);
 
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

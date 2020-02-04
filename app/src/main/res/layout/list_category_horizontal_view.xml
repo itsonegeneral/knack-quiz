@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="90dp"
+    android:padding="5dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_categoryListHolder"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:src="@drawable/ic_cat_cricket"
+            android:layout_width="wrap_content"
+            android:id="@+id/img_iconCategoryList"
+            android:layout_height="100dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_categoryNameList"
+            android:textColor="@color/colorTextOffWhite"
+            android:text="Crssicket" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:id="@+id/img_tickCategoryList"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_tick"
+         />
+
+</RelativeLayout>

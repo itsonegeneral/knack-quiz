@@ -31,6 +31,10 @@ dependencies {
 
     //Views
     implementation 'devlight.io:navigationtabbar:1.2.5'
+
     //Animations
+    implementation( 'com.github.thekhaeng:pushdown-anim-click:1.1.1' ){
+        exclude group: 'com.android.support'
+    }
     implementation files('libs/easyandroidanimationslibrary-v0.5.jar')
 }

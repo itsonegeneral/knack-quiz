@@ -13,6 +13,8 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
+
         <ImageView
             android:src="@drawable/ic_cat_cricket"
             android:layout_width="wrap_content"

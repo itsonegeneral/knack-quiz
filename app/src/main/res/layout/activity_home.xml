@@ -8,6 +8,10 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".HomeActivity">
 
+
+    <include
+        layout="@layout/toolbar_main_common"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_horizontal_ntb"
         android:layout_width="match_parent"

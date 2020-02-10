@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="wrap_content">
+
+
+
+                <ImageView
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:src="@drawable/ic_account" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Guest_3312341"
+                    android:layout_marginStart="3dp"
+                    android:textSize="17sp"
+                    android:maxLines="1"
+                    android:textColor="#fff"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp"/>
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="wrap_content">
+
+
+
+                <ImageView
+                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:src="@drawable/ic_price" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="3500"
+                    android:layout_marginStart="3dp"
+                    android:textSize="16sp"
+
+                    android:textColor="#fff"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+
+</com.google.android.material.appbar.AppBarLayout>

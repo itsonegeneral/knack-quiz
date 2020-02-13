@@ -34,7 +34,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //Animations
-    implementation( 'com.github.thekhaeng:pushdown-anim-click:1.1.1' ){
+    implementation('com.github.thekhaeng:pushdown-anim-click:1.1.1') {
         exclude group: 'com.android.support'
     }
     implementation files('libs/easyandroidanimationslibrary-v0.5.jar')

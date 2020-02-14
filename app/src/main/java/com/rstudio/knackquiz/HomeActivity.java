@@ -1,15 +1,21 @@
 package com.rstudio.knackquiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.rstudio.knackquiz.adapters.ViewPagerAdapter;
+import com.rstudio.knackquiz.fragments.bottomnav.FragmentHome;
 
 import java.util.ArrayList;
 
@@ -26,34 +32,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
-        viewPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 5;
-            }
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
 
-            @Override
-            public boolean isViewFromObject(final View view, final Object object) {
-                return view.equals(object);
-            }
-
-            @Override
-            public void destroyItem(final View container, final int position, final Object object) {
-                ((ViewPager) container).removeView((View) object);
-            }
-
-            @Override
-            public Object instantiateItem(final ViewGroup container, final int position) {
-                final View view = LayoutInflater.from(
-                        getBaseContext()).inflate(R.layout.item_vp, null, false);
-
-                final TextView txtPage = (TextView) view.findViewById(R.id.txt_vp_item_page);
-                txtPage.setText(String.format("Page #%d", position));
-
-                container.addView(view);
-                return view;
-            }
-        });
+        viewPager.setAdapter(viewPagerAdapter);
 
         final String[] colors = getResources().getStringArray(R.array.default_preview);
 
@@ -97,10 +83,6 @@ public class HomeActivity extends AppCompatActivity {
                         .title("Profile")
                         .build()
         );
-
-
-
-
 
 
         navigationTabBar.setModels(models);

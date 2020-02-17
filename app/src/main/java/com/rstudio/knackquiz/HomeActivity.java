@@ -15,7 +15,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rstudio.knackquiz.adapters.ViewPagerAdapter;
+import com.rstudio.knackquiz.fragments.bottomnav.FragmentContest;
+import com.rstudio.knackquiz.fragments.bottomnav.FragmentFriends;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentHome;
+import com.rstudio.knackquiz.fragments.bottomnav.FragmentLeaderboard;
+import com.rstudio.knackquiz.fragments.bottomnav.FragmentProfile;
 
 import java.util.ArrayList;
 
@@ -34,10 +38,10 @@ public class HomeActivity extends AppCompatActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentContest(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentLeaderboard(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentFriends(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentProfile(this), "Home");
 
         viewPager.setAdapter(viewPagerAdapter);
 

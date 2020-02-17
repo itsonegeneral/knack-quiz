@@ -32,6 +32,7 @@ dependencies {
     //Views
     implementation 'devlight.io:navigationtabbar:1.2.5'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.lzyzsd:circleprogress:1.2.1'
 
     //Animations
     implementation('com.github.thekhaeng:pushdown-anim-click:1.1.1') {

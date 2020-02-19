@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
     xmlns:custom="http://schemas.android.com/tools"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
@@ -30,6 +31,7 @@
 
                 <com.rstudio.knackquiz.helpers.CircleProgressBar
                     android:layout_width="match_parent"
+                    app:progress="100"
                     android:id="@+id/circleProgressBar"
                     app:progressBarThickness="5dp"
                     android:layout_height="match_parent"/>
@@ -56,7 +58,7 @@
                 android:id="@+id/mttv_question"
                 android:padding="20dp"
                 android:text="Which Color has the Longest Wavelength?"
-                android:textColor="@color/colorTextOffWhite"
+                android:textColor="#ECECEC"
                 android:textSize="18sp" />
 
 
@@ -79,7 +81,7 @@
                     android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Violet"
-                    android:textColor="@color/colorTextLight" />
+                    android:textColor="@color/colorTextOffWhite" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -103,7 +105,7 @@
                     android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Red"
-                    android:textColor="@color/colorTextLight" />
+                    android:textColor="@color/colorTextOffWhite" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -125,7 +127,7 @@
                     android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Blue"
-                    android:textColor="@color/colorTextLight" />
+                    android:textColor="@color/colorTextOffWhite"  />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -147,7 +149,7 @@
                     android:text="Green"
                     android:id="@+id/tv_questionOption4"
                     android:textSize="16sp"
-                    android:textColor="@color/colorTextLight" />
+                    android:textColor="@color/colorTextOffWhite"  />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -156,11 +158,6 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Next"
-        android:textAllCaps="false" />
+
 
 </LinearLayout>

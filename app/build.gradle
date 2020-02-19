@@ -27,14 +27,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.2.0-alpha04'
-
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     //Views
     implementation 'devlight.io:navigationtabbar:1.2.5'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
 
     //Animations
+
+    implementation 'com.airbnb.android:lottie:3.3.1'
     implementation('com.github.thekhaeng:pushdown-anim-click:1.1.1') {
         exclude group: 'com.android.support'
     }

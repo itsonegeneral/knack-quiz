@@ -12,10 +12,33 @@
         layout="@layout/toolbar_exit_game" />
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dinodance"
+            android:layout_height="200dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="Getting ready"
+            android:textColor="@color/colorTextOffWhite"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
     <FrameLayout
         android:layout_below="@id/tb_activityQuestion"
         android:layout_width="match_parent"
         android:id="@+id/frame_fragHolderQuestion"
-        android:layout_height="wrap_content"/>
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

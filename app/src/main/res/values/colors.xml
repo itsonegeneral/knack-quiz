@@ -7,4 +7,5 @@
     <color name="colorTextOffWhite">#E9E9E9</color>
     <color name="colorOptionCorrect">#7DCC80</color>
     <color name="colorOptionWrong">#df5a55</color>
+    <color name="colorNavBarGreen">#72d3b4</color>
 </resources>

@@ -23,6 +23,10 @@ public class FragmentFriends extends Fragment {
     private MaterialButton btnPlay; //TODO remove this
 
 
+    public FragmentFriends() {
+        context = getContext();
+    }
+
     public FragmentFriends(Context context) {
         this.context = context;
 

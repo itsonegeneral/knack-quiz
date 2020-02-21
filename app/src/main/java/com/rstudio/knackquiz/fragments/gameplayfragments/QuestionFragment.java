@@ -157,6 +157,9 @@ public class QuestionFragment extends Fragment {
             tvOption.setTextColor(getResources().getColor(R.color.colorOptionWrong));
             cardOption.setVisibility(View.VISIBLE);
 
+        }else{
+            Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
+            questionActivity.addCoins(10);
         }
         if (question.getAnswer().equals(tvOption1.getText().toString())) {
             cardOption1.setVisibility(View.VISIBLE);
@@ -206,6 +209,7 @@ public class QuestionFragment extends Fragment {
         }, 1300);
 
     }
+
 
     private void setProgressBar() {
         circleProgressBar.setMax(time * 2);

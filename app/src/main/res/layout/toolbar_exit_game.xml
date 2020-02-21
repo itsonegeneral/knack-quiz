@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:elevation="0dp"
-    android:orientation="vertical">
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    app:elevation="0dp">
 
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="0dp"
-        app:elevation="0dp"
-        android:background="@color/colorPrimaryDark">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBtn_tb_close"
+            style="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/ic_close_white_24dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:text="Quiz Wiz"
+            android:textColor="@color/colorTextOffWhite"
+            android:textSize="17sp" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:id="@+id/imgBtn_tb_close"
-                style="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="@drawable/ic_close_white_24dp"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Quiz Wiz"
-                android:layout_gravity="center_vertical"
-                android:textSize="17sp"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/colorTextOffWhite"
-                android:layout_height="wrap_content"/>
+        <include layout="@layout/header_coin_layout"/>
 
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </com.google.android.material.appbar.MaterialToolbar>
-
-
-</com.google.android.material.appbar.AppBarLayout>
+</com.google.android.material.appbar.MaterialToolbar>

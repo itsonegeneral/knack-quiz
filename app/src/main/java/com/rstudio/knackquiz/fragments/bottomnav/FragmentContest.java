@@ -22,6 +22,9 @@ public class FragmentContest extends Fragment {
     private LinearLayout layout;
     private MaterialButton btnPlay; //TODO remove this
 
+    public FragmentContest() {
+        context = getContext();
+    }
 
     public FragmentContest(Context context) {
         this.context = context;

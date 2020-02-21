@@ -26,6 +26,10 @@ public class FragmentProfile extends Fragment {
     private static final String TAG = "FragmentProfile";
 
 
+    public FragmentProfile() {
+        context = getContext();
+    }
+
     public FragmentProfile(Context context) {
         this.context = context;
         homeActivity = (HomeActivity) context;

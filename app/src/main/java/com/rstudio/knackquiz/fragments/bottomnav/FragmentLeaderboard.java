@@ -22,6 +22,9 @@ public class FragmentLeaderboard extends Fragment {
     private LinearLayout layout;
     private MaterialButton btnPlay; //TODO remove this
 
+    public FragmentLeaderboard() {
+        context = getContext();
+    }
 
     public FragmentLeaderboard(Context context) {
         this.context = context;

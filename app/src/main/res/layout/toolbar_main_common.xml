@@ -51,33 +51,7 @@
                 android:layout_height="1dp"/>
 
 
-            <LinearLayout
-                android:padding="5dp"
-                android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginEnd="5dp"
-                android:layout_height="wrap_content">
-
-
-
-                <ImageView
-                    android:layout_height="20dp"
-                    android:layout_width="25dp"
-                    android:src="@drawable/ic_price" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="3500"
-                    android:layout_marginStart="3dp"
-                    android:textSize="16sp"
-                    android:id="@+id/tb_tvcoinsMainCommon"
-                    android:textColor="#fff"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
+            <include layout="@layout/header_coin_layout"/>
 
 
         </LinearLayout>

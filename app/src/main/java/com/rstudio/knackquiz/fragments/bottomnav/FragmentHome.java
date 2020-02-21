@@ -24,6 +24,9 @@ public class FragmentHome extends Fragment {
     private MaterialButton btnPlay; //TODO remove this
 
 
+    public FragmentHome(){
+        context = getContext();
+    }
     public FragmentHome(Context context) {
         this.context = context;
 

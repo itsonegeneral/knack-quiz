@@ -12,6 +12,12 @@ import android.widget.TextView;
 
 import com.easyandroidanimations.library.FadeInAnimation;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.rstudio.knackquiz.datastore.DataStore;
+import com.rstudio.knackquiz.models.Player;
+
+import java.util.UUID;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -54,9 +60,21 @@ public class IntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 startActivity(new Intent(IntroActivity.this,IntroFavouriteActivity.class));
-
             }
         });
+
+
+
+
+        //Assign a new id to user
+        String userID = UUID.randomUUID().toString().replace("-","").substring(0,20);
+        Player player = new Player();
+        player.setPlayerID(userID);
+        DataStore.setCurrentPlayer(player,this);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        ref.child(userID).setValue(player);
+
 
     }
 

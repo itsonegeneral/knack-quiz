@@ -10,6 +10,7 @@
 
 
     <include
+        android:id="@+id/tb_activityHome"
         layout="@layout/toolbar_main_common"/>
 
     <androidx.viewpager.widget.ViewPager

@@ -2,6 +2,7 @@ package com.rstudio.knackquiz;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -14,12 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.rstudio.knackquiz.adapters.ViewPagerAdapter;
+import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentContest;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentFriends;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentHome;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentLeaderboard;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentProfile;
+import com.rstudio.knackquiz.models.Player;
 
 import java.util.ArrayList;
 
@@ -27,11 +36,16 @@ import devlight.io.library.ntb.NavigationTabBar;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private TextView tvCoins,tvUserName;
+    private Player player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initUI();
+        setToolbar();
+        loadData();
     }
 
     private void initUI() {
@@ -133,6 +147,32 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         }, 500);
+    }
+
+    private void loadData(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    player = dataSnapshot.getValue(Player.class);
+
+                    tvCoins.setText(String.valueOf(player.getCoins()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setToolbar(){
+        MaterialToolbar toolbar = findViewById(R.id.tb_activityHome);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
     }
 
 }

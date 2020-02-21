@@ -153,14 +153,12 @@ public class QuestionFragment extends Fragment {
         tvOption4.setTextColor(getResources().getColor(R.color.colorTextLight));
 
         if (!tvOption.getText().toString().equals(question.getAnswer())) {
-            Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
             tvOption.setBackgroundResource(R.drawable.background_option_wrong);
             tvOption.setTextColor(getResources().getColor(R.color.colorOptionWrong));
             cardOption.setVisibility(View.VISIBLE);
 
         }
         if (question.getAnswer().equals(tvOption1.getText().toString())) {
-
             cardOption1.setVisibility(View.VISIBLE);
             tvOption1.setBackgroundResource(R.drawable.background_option_correct);
             tvOption1.setTextColor(getResources().getColor(R.color.colorOptionCorrect));
@@ -227,6 +225,7 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onFinish() {
                 circleProgressBar.setProgress(0);
+                questionActivity.showNextQuestion();
             }
         };
 

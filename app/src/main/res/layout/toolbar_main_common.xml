@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark">
 
         <LinearLayout
             android:gravity="center"
@@ -31,6 +28,7 @@
 
                 <ImageView
                     android:layout_height="30dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_width="30dp"
                     android:src="@drawable/ic_account" />
 
@@ -40,6 +38,7 @@
                     android:layout_marginStart="3dp"
                     android:textSize="17sp"
                     android:maxLines="1"
+                    android:id="@+id/tb_tvusernameMainCommmon"
                     android:textColor="#fff"
                     android:layout_height="wrap_content"/>
 
@@ -74,7 +73,7 @@
                     android:text="3500"
                     android:layout_marginStart="3dp"
                     android:textSize="16sp"
-
+                    android:id="@+id/tb_tvcoinsMainCommon"
                     android:textColor="#fff"
                     android:layout_height="wrap_content"/>
 
@@ -82,7 +81,4 @@
 
 
         </LinearLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
-
-
-</com.google.android.material.appbar.AppBarLayout>
+</com.google.android.material.appbar.MaterialToolbar>

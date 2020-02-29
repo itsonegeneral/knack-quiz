@@ -10,6 +10,12 @@
 
 
 
+    <ImageView
+        android:layout_width="100dp"
+        android:background="@drawable/ic_account"
+        android:transitionName="imagetransition"
+        android:layout_height="100dp"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:text="You are not signed in !"

@@ -5,16 +5,44 @@ import android.graphics.drawable.Drawable;
 import java.io.Serializable;
 
 public class Category implements Serializable {
-    private String name;
-    private int id;
-    private Drawable icDrawable;
+    private String categoryName,parentCategory,id,iconLink;
     private boolean isSelected=false;
 
     public Category() {
+
     }
 
-    public String getName() {
-        return name;
+
+    public String getCategory() {
+        return categoryName;
+    }
+
+    public void setCategory(String category) {
+        this.categoryName = category;
+    }
+
+    public String getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(String parentCategory) {
+        this.parentCategory = parentCategory;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIconLink() {
+        return iconLink;
+    }
+
+    public void setIconLink(String iconLink) {
+        this.iconLink = iconLink;
     }
 
     public boolean isSelected() {
@@ -23,25 +51,5 @@ public class Category implements Serializable {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Drawable getIcDrawable() {
-        return icDrawable;
-    }
-
-    public void setIcDrawable(Drawable icDrawable) {
-        this.icDrawable = icDrawable;
     }
 }

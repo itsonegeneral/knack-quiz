@@ -3,17 +3,25 @@ package com.rstudio.knackquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.multidex.MultiDex;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -29,6 +37,8 @@ import com.rstudio.knackquiz.fragments.bottomnav.FragmentFriends;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentHome;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentLeaderboard;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentProfile;
+import com.rstudio.knackquiz.helpers.CategoryHelper;
+import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Player;
 
 import java.util.ArrayList;
@@ -37,8 +47,11 @@ import devlight.io.library.ntb.NavigationTabBar;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView tvCoins,tvUserName;
+    private ArrayList<Category> favCats = new ArrayList<>();
+    private TextView tvCoins, tvUserName;
     private Player player;
+    private static final String TAG = "HomeActivity";
+    private ImageView imgProfileToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +61,28 @@ public class HomeActivity extends AppCompatActivity {
         initUI();
         setToolbar();
         loadData();
+        getFavourites();
+
+    }
+
+
+    private void getFavourites() {
+
+        favCats = CategoryHelper.getFavCategories();
+        for (Category fav : favCats) {
+            Log.d(TAG, "getFavourites: " + fav.getCategory());
+        }
+
     }
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFrag(new FragmentHome(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentContest(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentLeaderboard(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentFriends(this), "Home");
-        viewPagerAdapter.addFrag(new FragmentProfile(this), "Home");
+        viewPagerAdapter.addFrag(new FragmentContest(this), "Contest");
+        viewPagerAdapter.addFrag(new FragmentLeaderboard(this), "Leaderboard");
+        viewPagerAdapter.addFrag(new FragmentFriends(this), "Friends");
+        viewPagerAdapter.addFrag(new FragmentProfile(this), "Profile");
 
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -127,6 +152,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(final int position) {
                 navigationTabBar.getModels().get(position).hideBadge();
+                if (position == 4) {
+                    getSupportActionBar().hide();
+                    getSupportFragmentManager().beginTransaction()
+                            //.addSharedElement(imgProfileToolbar, "imagetransition")
+                            .replace(R.id.frame_fragHolderHome, new FragmentProfile(HomeActivity.this))
+                            .commit();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        postponeEnterTransition();
+                    }
+
+
+                } else {
+                    getSupportActionBar().show();
+                }
             }
 
             @Override
@@ -151,12 +190,12 @@ public class HomeActivity extends AppCompatActivity {
         }, 500);
     }
 
-    private void loadData(){
+    private void loadData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     player = dataSnapshot.getValue(Player.class);
 
                     tvCoins.setText(String.valueOf(player.getCoins()));
@@ -170,11 +209,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         MaterialToolbar toolbar = findViewById(R.id.tb_activityHome);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
+        imgProfileToolbar = findViewById(R.id.img_toolbarProfile);
     }
 
 }

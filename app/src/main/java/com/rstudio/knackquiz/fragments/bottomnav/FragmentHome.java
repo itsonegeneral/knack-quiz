@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.rstudio.knackquiz.HomeActivity;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
 
@@ -22,14 +23,15 @@ public class FragmentHome extends Fragment {
     private Context context;
     private LinearLayout layout;
     private MaterialButton btnPlay; //TODO remove this
-
+    private HomeActivity homeActivity;
 
     public FragmentHome(){
         context = getContext();
+        homeActivity = (HomeActivity)context;
     }
     public FragmentHome(Context context) {
         this.context = context;
-
+        homeActivity = (HomeActivity) context;
     }
 
     @Nullable
@@ -48,4 +50,6 @@ public class FragmentHome extends Fragment {
 
         return layout;
     }
+
+
 }

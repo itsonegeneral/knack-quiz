@@ -2,6 +2,7 @@ package com.rstudio.knackquiz.fragments.bottomnav;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.transition.TransitionInflater;
 
 import com.google.android.material.button.MaterialButton;
 import com.rstudio.knackquiz.HomeActivity;
@@ -40,23 +43,11 @@ public class FragmentProfile extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (LinearLayout) inflater.inflate(R.layout.fragment_profile, container, false);
-
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            homeActivity.startPostponedEnterTransition();
+            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+        }
         return layout;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Log.d(TAG, "onResume: ");
-
-        if (homeActivity != null)
-            try {
-                homeActivity.getSupportActionBar().hide();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-    }
 }

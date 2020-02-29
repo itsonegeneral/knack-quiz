@@ -18,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.internal.$Gson$Preconditions;
 import com.rstudio.knackquiz.IntroFavouriteActivity;
 import com.rstudio.knackquiz.R;
+import com.rstudio.knackquiz.gameplay.QuestionActivity;
 import com.rstudio.knackquiz.helpers.CategoryHelper;
 import com.rstudio.knackquiz.models.Category;
+import com.rstudio.knackquiz.models.Question;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -40,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView tvName;
+        TextView tvName;
         RelativeLayout relativeLayout;
         ImageView imgIcon, imgTick;
 
@@ -69,28 +72,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
 
         holder.tvName.setText(category.getCategory());
-        Log.d(TAG, "onBindViewHolder: " + category.getCategory() + category.getIconLink());
+        Toast.makeText(context, category.getCategory(), Toast.LENGTH_SHORT).show();
 
         GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
-
-
         PushDownAnim.setPushDownAnimTo(holder.relativeLayout);
-        if (category.isSelected()) {
-            holder.imgTick.setVisibility(View.VISIBLE);
-        } else {
-            holder.imgTick.setVisibility(View.GONE);
-        }
+
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                category.setSelected(!category.isSelected());
-                if (category.isSelected()) {
-                    holder.imgTick.setVisibility(View.VISIBLE);
-                } else {
-                    holder.imgTick.setVisibility(View.GONE);
-                }
+                Intent intent  = new Intent(context, QuestionActivity.class);
+                intent.putExtra("cat",category.getCategory());
+                context.startActivity(intent);
             }
         });
+
     }
 
     @Override

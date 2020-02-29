@@ -53,6 +53,7 @@ public class QuestionActivity extends AppCompatActivity {
     private int index = 0;
     private int correct = 0;
     private TextView tvCoins;
+    private String cat;
     private Player player;
 
     @Override
@@ -64,6 +65,15 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
         Firebase.setAndroidContext(this);
         setToolbar();
+
+
+
+
+        if(getIntent().hasExtra("cat")) {
+            cat = getIntent().getStringExtra("cat");
+        }else{
+            Toast.makeText(this, "No Category Received", Toast.LENGTH_SHORT).show();
+        }
 
 
 /*
@@ -142,7 +152,11 @@ public class QuestionActivity extends AppCompatActivity {
         QuestionFragment questionFragment = new QuestionFragment(QuestionActivity.this, questions.get(i), i + 1);
         FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
         //   fr.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_in_right);
-        fr.replace(R.id.frame_fragHolderQuestion, questionFragment).commit();
+        try {
+            fr.replace(R.id.frame_fragHolderQuestion, questionFragment).commit();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
     }
 
     private void startGamePlay() {
@@ -150,7 +164,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void getQuestions() {
-        String url = DBClass.urlGetQuestions + "?category=Cricket&limit=10";
+        String url = DBClass.urlGetQuestions + "?category=" + cat + "&limit=10";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -163,9 +177,13 @@ public class QuestionActivity extends AppCompatActivity {
                         Question question = gson.fromJson(array.getJSONObject(i).toString(), Question.class);
                         questions.add(question);
                     }
-
-
-                    showNextQuestion();
+                    if(questions.isEmpty()){
+                        Toast.makeText(QuestionActivity.this, "No Questions Found", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        showNextQuestion();
+                    }
+                    
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

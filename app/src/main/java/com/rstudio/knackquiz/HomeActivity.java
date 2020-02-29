@@ -8,6 +8,9 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.multidex.MultiDex;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -30,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rstudio.knackquiz.adapters.CategoryAdapter;
 import com.rstudio.knackquiz.adapters.ViewPagerAdapter;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentContest;
@@ -47,11 +52,12 @@ import devlight.io.library.ntb.NavigationTabBar;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ArrayList<Category> favCats = new ArrayList<>();
+
     private TextView tvCoins, tvUserName;
     private Player player;
     private static final String TAG = "HomeActivity";
     private ImageView imgProfileToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +67,17 @@ public class HomeActivity extends AppCompatActivity {
         initUI();
         setToolbar();
         loadData();
-        getFavourites();
 
     }
 
 
-    private void getFavourites() {
-
-        favCats = CategoryHelper.getFavCategories();
-        for (Category fav : favCats) {
-            Log.d(TAG, "getFavourites: " + fav.getCategory());
-        }
-
-    }
 
     private void initUI() {
+        setNavBar();
+
+    }
+
+    private void setNavBar() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_horizontal_ntb);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFrag(new FragmentHome(this), "Home");

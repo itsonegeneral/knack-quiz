@@ -25,20 +25,20 @@ import com.rstudio.knackquiz.helpers.CategoryHelper;
 import com.rstudio.knackquiz.models.Category;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FragmentHome extends Fragment {
 
     private Context context;
     private LinearLayout layout;
     private ArrayList<Category> favCats = new ArrayList<>();
-    private MaterialButton btnPlay; //TODO remove this
     private HomeActivity homeActivity;
     private static final String TAG = "FragmentHome";
     private RecyclerView rViewFavourites;
     private CategoryAdapter categoryAdapter;
 
     public FragmentHome(){
-        context = getContext();
+        context = getActivity();
         homeActivity = (HomeActivity)context;
     }
     public FragmentHome(Context context) {
@@ -53,14 +53,6 @@ public class FragmentHome extends Fragment {
         getFavourites();
         initUI();
 
-        btnPlay = layout.findViewById(R.id.imgBtn_tempPlay);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, QuestionActivity.class));
-
-            }
-        });
 
         return layout;
     }

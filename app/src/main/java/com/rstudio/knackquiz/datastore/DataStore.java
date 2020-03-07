@@ -12,6 +12,8 @@ public abstract class DataStore {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static final String PLAYER = "PLAYER",USER= "USER";
+    public static final String FIRSTTIME ="FIRSTTIME", STATUS= "STATUS";
+
     public DataStore() {
 
     }

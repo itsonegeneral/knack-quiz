@@ -22,6 +22,7 @@ import com.google.gson.internal.$Gson$Preconditions;
 import com.rstudio.knackquiz.IntroFavouriteActivity;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
+import com.rstudio.knackquiz.gameplay.QuizOptionsActivity;
 import com.rstudio.knackquiz.helpers.CategoryHelper;
 import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Question;
@@ -72,15 +73,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
 
         holder.tvName.setText(category.getCategory());
-        Toast.makeText(context, category.getCategory(), Toast.LENGTH_SHORT).show();
 
-        GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
+
+            GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
         PushDownAnim.setPushDownAnimTo(holder.relativeLayout);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(context, QuestionActivity.class);
+                Intent intent  = new Intent(context, QuizOptionsActivity.class);
                 intent.putExtra("cat",category.getCategory());
                 context.startActivity(intent);
             }

@@ -77,33 +77,6 @@ public class QuestionFragment extends Fragment {
         ViewAnimator viewAnimator3 = new ViewAnimator(cardOption4, 1400, true);
         new Thread(viewAnimator3).start();
 
-/*
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                cardOption2.setVisibility(View.VISIBLE);
-                new FadeInAnimation(cardOption2).setDuration(200).animate();
-            }
-        }, 700);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                cardOption3.setVisibility(View.VISIBLE);
-                new FadeInAnimation(cardOption3).setDuration(200).animate();
-            }
-        }, 900);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                cardOption4.setVisibility(View.VISIBLE);
-                new FadeInAnimation(cardOption4).setDuration(200).animate();
-                setProgressBar();
-            }
-        }, 1100);
-*/
-
-
         setListeners();
 
         return layout;
@@ -257,6 +230,11 @@ public class QuestionFragment extends Fragment {
         tvOption4 = layout.findViewById(R.id.tv_questionOption4);
 
 
+        char a = question.getQuestion().charAt(0);
+        if (a == ' ') {
+            tvQuestion.setText(question.getQuestion().substring(1, tvQuestion.length()));
+        }
+
         String quest = questionNumber + "." + question.getQuestion();
         question.setQuestion(quest);
 
@@ -272,13 +250,6 @@ public class QuestionFragment extends Fragment {
 
 
         new FadeInAnimation(tvQuestion).setDuration(500).animate();
-
-
-        char a = question.getQuestion().charAt(0);
-        if (a == ' ') {
-            tvQuestion.setText(question.getQuestion().substring(1, tvQuestion.length()));
-        }
-        Toast.makeText(context, question.getAnswer(), Toast.LENGTH_SHORT).show();
 
 
     }

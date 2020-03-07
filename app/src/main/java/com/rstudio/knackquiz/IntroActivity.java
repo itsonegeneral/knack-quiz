@@ -3,6 +3,7 @@ package com.rstudio.knackquiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -74,6 +75,15 @@ public class IntroActivity extends AppCompatActivity {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.child(userID).setValue(player);
+
+
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences(DataStore.FIRSTTIME,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(DataStore.STATUS,"NOT");
+        editor.apply();
+
 
 
     }

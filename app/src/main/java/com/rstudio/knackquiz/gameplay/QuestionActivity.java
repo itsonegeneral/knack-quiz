@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +38,10 @@ import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.fragments.gameplayfragments.QuestionFragment;
 import com.rstudio.knackquiz.helpers.DBClass;
+import com.rstudio.knackquiz.models.GameSession;
 import com.rstudio.knackquiz.models.Player;
 import com.rstudio.knackquiz.models.Question;
+import com.rstudio.knackquiz.models.QuizOption;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +59,8 @@ public class QuestionActivity extends AppCompatActivity {
     private TextView tvCoins;
     private String cat;
     private Player player;
+    private QuizOption quizOption;
+    private GameSession gameSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +71,13 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
         Firebase.setAndroidContext(this);
         setToolbar();
+        gameSession = new GameSession();
 
 
-
-
-        if(getIntent().hasExtra("cat")) {
-            cat = getIntent().getStringExtra("cat");
-        }else{
-            Toast.makeText(this, "No Category Received", Toast.LENGTH_SHORT).show();
+        if (getIntent().hasExtra("options")) {
+            quizOption = (QuizOption) getIntent().getSerializableExtra("options");
+        } else {
+            finish();
         }
 
 
@@ -92,10 +97,10 @@ public class QuestionActivity extends AppCompatActivity {
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
+        ref.child(DataStore.getCurrentPlayerID(getApplicationContext())).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     player = dataSnapshot.getValue(Player.class);
                     tvCoins.setText(String.valueOf(player.getCoins()));
                 }
@@ -128,7 +133,7 @@ public class QuestionActivity extends AppCompatActivity {
 
             @Override
             public void onComplete(FirebaseError firebaseError, boolean b, com.firebase.client.DataSnapshot dataSnapshot) {
-                if(b){
+                if (b) {
                     Toast.makeText(QuestionActivity.this, "Transaction Complete", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -144,8 +149,15 @@ public class QuestionActivity extends AppCompatActivity {
             index++;
         } else {
             Toast.makeText(this, "Quiz finished", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), QuizFinishActivity.class);
+            intent.putExtra("result", gameSession);
+            startActivity(intent);
             //Show final result
         }
+    }
+
+    public void addGameActivity(Question question, boolean isCorrect) {
+        gameSession.addQuestionActivity(question, isCorrect);
     }
 
     private void showFragment(int i) {
@@ -154,7 +166,7 @@ public class QuestionActivity extends AppCompatActivity {
         //   fr.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_in_right);
         try {
             fr.replace(R.id.frame_fragHolderQuestion, questionFragment).commit();
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }
@@ -164,7 +176,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void getQuestions() {
-        String url = DBClass.urlGetQuestions + "?category=" + cat + "&limit=10";
+        String url = DBClass.urlGetQuestions + "?category=" + quizOption.getCategoryName() + "&limit=" + quizOption.getQuestionsize();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -177,13 +189,13 @@ public class QuestionActivity extends AppCompatActivity {
                         Question question = gson.fromJson(array.getJSONObject(i).toString(), Question.class);
                         questions.add(question);
                     }
-                    if(questions.isEmpty()){
+                    if (questions.isEmpty()) {
                         Toast.makeText(QuestionActivity.this, "No Questions Found", Toast.LENGTH_SHORT).show();
                         finish();
-                    }else{
+                    } else {
                         showNextQuestion();
                     }
-                    
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -195,14 +207,16 @@ public class QuestionActivity extends AppCompatActivity {
                 Log.d(TAG, "onErrorResponse: " + error);
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         MaterialToolbar toolbar = findViewById(R.id.tb_activityQuestion);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
         setSupportActionBar(toolbar);
+        ImageView img = findViewById(R.id.imgBtn_tb_close);
+        img.setBackground(getResources().getDrawable(R.drawable.ic_close_white_24dp));
         getSupportActionBar().setTitle("");
     }
 

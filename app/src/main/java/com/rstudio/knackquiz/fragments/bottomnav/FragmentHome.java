@@ -68,7 +68,7 @@ public class FragmentHome extends Fragment {
 
     private void initUI(){
         rViewFavourites =layout.findViewById(R.id.rView_favouritesHome);
-        categoryAdapter =new CategoryAdapter(context,favCats);
+        categoryAdapter =new CategoryAdapter(homeActivity,favCats);
         rViewFavourites.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
         rViewFavourites.setAdapter(categoryAdapter);
     }

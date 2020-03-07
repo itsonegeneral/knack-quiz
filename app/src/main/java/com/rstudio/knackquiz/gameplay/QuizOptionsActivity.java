@@ -1,14 +1,18 @@
 package com.rstudio.knackquiz.gameplay;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +22,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.adapters.QuizOptionAdapter;
+import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.helpers.DBClass;
+import com.rstudio.knackquiz.models.Player;
 import com.rstudio.knackquiz.models.QuizOption;
 
 import org.json.JSONArray;
@@ -37,15 +48,22 @@ public class QuizOptionsActivity extends AppCompatActivity {
     private QuizOptionAdapter quizOptionAdapter;
     private RecyclerView recyclerView;
     private ArrayList<QuizOption> quizOptions;
+    private TextView tvCoins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_options);
-        setToolbar();
         initValues();
+        setToolbar();
+        loadData();
+        loadCoins();
 
 
+
+    }
+
+    private void loadData() {
         String url = DBClass.urlGetQuizOptions + "?category=" + cat;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -80,10 +98,8 @@ public class QuizOptionsActivity extends AppCompatActivity {
         });
 
 
-      RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-
-
     }
 
     private void initValues() {
@@ -93,12 +109,43 @@ public class QuizOptionsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
+
+
+    private void loadCoins() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    long coins = dataSnapshot.child("coins").getValue(Long.class);
+
+                    tvCoins.setText(String.valueOf(coins));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        overridePendingTransition(0,0);
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.tb_quizOptionsActivity);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
-        tv.setText("Challenges");
+        tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tv.setText(cat + " Challenges");
     }
 
 }

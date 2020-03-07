@@ -20,6 +20,7 @@
             android:src="@drawable/ic_cat_cricket"
             android:layout_width="70dp"
             android:id="@+id/img_iconCategoryList"
+            android:transitionName="@string/toolbar_transition"
             android:layout_marginBottom="5dp"
             android:layout_height="70dp" />
 

@@ -47,7 +47,12 @@ public class QuestionFragment extends Fragment {
     private CountDownTimer countDownTimer;
     private QuestionActivity questionActivity;
     private int questionNumber;
+    boolean isCorrect = false;
     int i = 1;
+
+    public QuestionFragment() {
+
+    }
 
     public QuestionFragment(Context context, Question question, int number) {
         this.context = context;
@@ -130,9 +135,9 @@ public class QuestionFragment extends Fragment {
             tvOption.setTextColor(getResources().getColor(R.color.colorOptionWrong));
             cardOption.setVisibility(View.VISIBLE);
 
-        }else{
+        } else {
             Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
-            questionActivity.addCoins(10);
+            isCorrect = true;
         }
         if (question.getAnswer().equals(tvOption1.getText().toString())) {
             cardOption1.setVisibility(View.VISIBLE);
@@ -177,6 +182,7 @@ public class QuestionFragment extends Fragment {
                 new FadeOutAnimation(cardOption4).setDuration(500).animate();
 
                 questionActivity.showNextQuestion();
+                questionActivity.addGameActivity(question, isCorrect);
 
             }
         }, 1300);

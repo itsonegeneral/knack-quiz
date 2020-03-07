@@ -14,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.internal.$Gson$Preconditions;
+import com.rstudio.knackquiz.HomeActivity;
 import com.rstudio.knackquiz.IntroFavouriteActivity;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
@@ -75,15 +77,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.tvName.setText(category.getCategory());
 
 
-            GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
+        GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
         PushDownAnim.setPushDownAnimTo(holder.relativeLayout);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(context, QuizOptionsActivity.class);
-                intent.putExtra("cat",category.getCategory());
-                context.startActivity(intent);
+
+                HomeActivity activity = (HomeActivity) context;
+                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.imgIcon, context.getString(R.string.toolbar_transition));
+                Intent intent = new Intent(context, QuizOptionsActivity.class);
+                intent.putExtra("cat", category.getCategory());
+                context.startActivity(intent, activityOptionsCompat.toBundle());
             }
         });
 

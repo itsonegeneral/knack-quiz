@@ -1,8 +1,11 @@
 package com.rstudio.knackquiz.models;
 
-public class QuizOption {
+import java.io.Serializable;
+
+public class QuizOption implements Serializable {
 
     private String id, title, catid, rewardcoins, description, entrycoins, gametime, questionsize, difficulty;
+    private String categoryName,parentCategory,iconLink,type;
 
     public QuizOption() {
     }
@@ -17,6 +20,38 @@ public class QuizOption {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(String parentCategory) {
+        this.parentCategory = parentCategory;
+    }
+
+    public String getIconLink() {
+        return iconLink;
+    }
+
+    public void setIconLink(String iconLink) {
+        this.iconLink = iconLink;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setTitle(String title) {

@@ -14,17 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".gameplay.QuizOptionsActivity"></activity>
-        <activity android:name=".gameplay.QuizFinishActivity" />
-        <activity android:name=".gameplay.QuestionActivity" />
-        <activity android:name=".IntroFavouriteActivity"></activity>
-        <activity android:name=".IntroActivity"></activity>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".gameplay.QuizOptionsActivity" />
+        <activity android:name=".gameplay.QuizFinishActivity" />
+        <activity android:name=".gameplay.QuestionActivity" />
+        <activity android:name=".IntroFavouriteActivity" />
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".HomeActivity">
+
         </activity>
 
         <meta-data

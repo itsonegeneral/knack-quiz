@@ -64,6 +64,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (context == null) {
+            context = parent.getContext();
+        }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_category_horizontal_view,
                 parent, false);
         return new MyViewHolder(view);
@@ -77,7 +80,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.tvName.setText(category.getCategory());
 
 
-        GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
+        GlideToVectorYou.justLoadImage((Activity)context, Uri.parse(category.getIconLink()), holder.imgIcon);
         PushDownAnim.setPushDownAnimTo(holder.relativeLayout);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {

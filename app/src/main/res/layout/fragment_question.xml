@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
     xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
     android:background="@color/colorPrimaryDark"
+    android:gravity="center"
     android:orientation="vertical">
-
-
 
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/colorCardPrimaryDark"
+        app:cardElevation="5dp"
+        app:contentPaddingBottom="15dp"
+        app:contentPaddingTop="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorCardPrimaryDark"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -26,24 +31,21 @@
             <FrameLayout
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@color/colorPrimaryDark"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorCardPrimaryDark">
 
                 <com.rstudio.knackquiz.helpers.CircleProgressBar
-                    android:layout_width="match_parent"
-                    app:progress="100"
                     android:id="@+id/circleProgressBar"
-                    app:progressBarThickness="5dp"
-                    android:layout_height="match_parent"/>
-
-
-
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:progress="100"
+                    app:progressBarThickness="5dp" />
 
 
                 <TextView
+                    android:id="@+id/tv_questionTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_questionTime"
                     android:layout_gravity="center"
                     android:text="15"
                     android:textColor="@color/colorPrimary"
@@ -52,104 +54,104 @@
             </FrameLayout>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mttv_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:id="@+id/mttv_question"
+                android:background="@color/colorCardPrimaryDark"
                 android:padding="20dp"
                 android:text="Which Color has the Longest Wavelength?"
-                android:textColor="#ECECEC"
+                android:textColor="@color/colorTextHighEmphasise"
                 android:textSize="18sp" />
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_questionOption1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:id="@+id/card_questionOption1"
 
                 app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <TextView
-                    android:layout_width="match_parent"
                     android:id="@+id/tv_questionOption1"
-                    android:textSize="16sp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_option"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Violet"
-                    android:textColor="@color/colorTextOffWhite" />
+                    android:textColor="@color/colorTextOffWhite"
+                    android:textSize="16sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_questionOption2"
+                style="?android:attr/selectableItemBackground"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:id="@+id/card_questionOption2"
+                android:layout_margin="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                style="?android:attr/selectableItemBackground"
-                android:layout_margin="10dp"
                 app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <TextView
-                    android:layout_width="match_parent"
                     android:id="@+id/tv_questionOption2"
-                    android:textSize="16sp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Red"
-                    android:textColor="@color/colorTextOffWhite" />
+                    android:textColor="@color/colorTextOffWhite"
+                    android:textSize="16sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_questionOption3"
+                style="?android:attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/card_questionOption3"
+                android:layout_margin="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                style="?android:attr/selectableItemBackground"
-                android:layout_margin="10dp"
                 app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <TextView
+                    android:id="@+id/tv_questionOption3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_questionOption3"
-                    android:textSize="16sp"
                     android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Blue"
-                    android:textColor="@color/colorTextOffWhite"  />
+                    android:textColor="@color/colorTextOffWhite"
+                    android:textSize="16sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_questionOption4"
+                style="?android:attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:id="@+id/card_questionOption4"
                 android:clickable="true"
                 android:focusable="true"
-                style="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <TextView
+                    android:id="@+id/tv_questionOption4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_option"
                     android:padding="20dp"
                     android:text="Green"
-                    android:id="@+id/tv_questionOption4"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorTextOffWhite"  />
+                    android:textColor="@color/colorTextOffWhite"
+                    android:textSize="16sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -157,7 +159,6 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
 
 </LinearLayout>

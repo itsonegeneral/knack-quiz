@@ -62,11 +62,17 @@ public class QuestionFragment extends Fragment {
         Log.d(TAG, "QuestionFragment: " + number);
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        questionActivity = (QuestionActivity) getActivity();
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (LinearLayout) inflater.inflate(R.layout.fragment_question, container, false);
-
         initValues();
 
         Log.d(TAG, "Timer started ");
@@ -260,6 +266,12 @@ public class QuestionFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        questionActivity = null;
+    }
 
     public class ViewAnimator implements Runnable {
 

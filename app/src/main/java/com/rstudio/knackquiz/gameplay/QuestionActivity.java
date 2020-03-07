@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class QuestionActivity extends AppCompatActivity {
     private String cat;
     private Player player;
     private QuizOption quizOption;
+    private Activity questionActivty;
     private GameSession gameSession;
 
     @Override
@@ -142,6 +144,7 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+
     public void showNextQuestion() {
         Log.d(TAG, "showNextQuestion: " + index);
         if (index < questions.size()) {
@@ -149,8 +152,9 @@ public class QuestionActivity extends AppCompatActivity {
             index++;
         } else {
             Toast.makeText(this, "Quiz finished", Toast.LENGTH_SHORT).show();
+            finish();
             Intent intent = new Intent(getApplicationContext(), QuizFinishActivity.class);
-            intent.putExtra("result", gameSession);
+            intent.putExtra("result", gameSession.getCorrectAnswers());
             startActivity(intent);
             //Show final result
         }
@@ -161,7 +165,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void showFragment(int i) {
-        QuestionFragment questionFragment = new QuestionFragment(QuestionActivity.this, questions.get(i), i + 1);
+        QuestionFragment questionFragment = new QuestionFragment(questionActivty, questions.get(i), i + 1);
         FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
         //   fr.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_in_right);
         try {
@@ -193,6 +197,7 @@ public class QuestionActivity extends AppCompatActivity {
                         Toast.makeText(QuestionActivity.this, "No Questions Found", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
+                        questionActivty = QuestionActivity.this;
                         showNextQuestion();
                     }
 

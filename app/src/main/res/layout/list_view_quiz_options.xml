@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_quizOptionItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentPadding="10dp"
         android:layout_margin="10dp"
-        android:id="@+id/card_quizOptionItem"
-        app:cardBackgroundColor="@color/colorCardPrimaryDark">
+        app:cardBackgroundColor="@color/colorCardPrimaryDark"
+        app:cardElevation="4dp"
+        app:contentPadding="10dp">
 
 
         <LinearLayout
@@ -21,63 +22,112 @@
 
 
             <TextView
+                android:id="@+id/tv_quizOptionsTitle"
                 style="?android:attr/textSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli_bold"
-                android:id="@+id/tv_quizOptionsTitle"
                 android:text="Quiz Master"
                 android:textColor="@color/colorTextHighEmphasise"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_quizOptionsDescriptionList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_quizOptionsDescriptionList"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/muli"
-                android:textColor="@color/colorTextLowEmphasise"
-                android:text="This is a sample description of the quiz challenge in the and it will be of maxnimum git " />
+                android:text="This is a sample description of the quiz challenge in the and it will be of maxnimum git "
+                android:textColor="@color/colorTextLowEmphasise" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/card_quizOptionCoins"
-                android:layout_gravity="end|bottom"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/colorPrimary"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="4dp">
-
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/ll_rewardLayoutOptionsCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="horizontal">
 
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="3dp"
-                        android:src="@drawable/ic_price" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/muli"
+                        android:text="Prize"
+                        android:textColor="@color/colorTextLowEmphasise"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/ic_price" />
+
+                    <TextView
+                        android:id="@+id/tv_rewardCoinsQuizOption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/muli_bold"
-                        android:onClick="play"
-                        android:text="500"
-                        android:id="@+id/tv_rewardCoinQuizOption"
-                        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+                        android:text="1000"
+                        android:textColor="@color/colorTextHighEmphasise"
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_quizOptionCoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_button_primary"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="3dp"
+                            android:src="@drawable/ic_price" />
+
+                        <TextView
+                            android:id="@+id/tv_entryCoinQuizOption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/muli_bold"
+                            android:onClick="play"
+                            android:text="500"
+                            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
 
         </LinearLayout>
 

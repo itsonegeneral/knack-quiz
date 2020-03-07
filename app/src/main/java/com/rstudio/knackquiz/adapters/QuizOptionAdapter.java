@@ -28,13 +28,14 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle, tvDescription, tvCoins;
+        TextView tvTitle, tvDescription, tvRewardCoins,tvEntryCoins;
         MaterialCardView cardView, cardCoins;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvCoins = itemView.findViewById(R.id.tv_rewardCoinQuizOption);
+            tvEntryCoins = itemView.findViewById(R.id.tv_entryCoinQuizOption);
+            tvRewardCoins = itemView.findViewById(R.id.tv_rewardCoinsQuizOption);
             tvDescription = itemView.findViewById(R.id.tv_quizOptionsDescriptionList);
             tvTitle = itemView.findViewById(R.id.tv_quizOptionsTitle);
             cardCoins = itemView.findViewById(R.id.card_quizOptionCoins);
@@ -56,7 +57,8 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
 
         holder.tvTitle.setText(quizOption.getTitle());
         holder.tvDescription.setText(quizOption.getDescription());
-        holder.tvCoins.setText(quizOption.getRewardcoins());
+        holder.tvRewardCoins.setText(quizOption.getRewardcoins());
+        holder.tvEntryCoins.setText(quizOption.getEntrycoins());
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {

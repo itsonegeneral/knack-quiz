@@ -80,6 +80,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
                                     quizOptions.add(quizOption);
                                     Log.d(TAG, "onResponse: " + data.getJSONObject(i).toString());
                                 }
+                                ;
                                 quizOptionAdapter = new QuizOptionAdapter(QuizOptionsActivity.this, quizOptions);
                                 recyclerView.setAdapter(quizOptionAdapter);
                             } else {

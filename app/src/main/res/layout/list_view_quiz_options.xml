@@ -47,6 +47,49 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/muli_bold"
+                            android:text="Entry"
+                            android:textColor="@color/colorTextLowEmphasise" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_price" />
+
+                        <TextView
+                            android:id="@+id/tv_entryCoinQuizOption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/muli_bold"
+                            android:onClick="play"
+                            android:text="500"
+                            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+
+                    </LinearLayout>
+
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="1" />
+
                 <LinearLayout
                     android:id="@+id/ll_rewardLayoutOptionsCard"
                     android:layout_width="wrap_content"
@@ -61,7 +104,7 @@
                         android:fontFamily="@font/muli"
                         android:text="Prize"
                         android:textColor="@color/colorTextLowEmphasise"
-                        android:textSize="16sp" />
+                        />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -81,53 +124,19 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="2dp"
-                    android:layout_weight="1" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_quizOptionCoins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="4dp">
-
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/background_button_primary"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginRight="3dp"
-                            android:src="@drawable/ic_price" />
-
-                        <TextView
-                            android:id="@+id/tv_entryCoinQuizOption"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/muli_bold"
-                            android:onClick="play"
-                            android:text="500"
-                            android:textColor="@color/common_google_signin_btn_text_dark_default" />
-
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:text="Play"
+                android:textAllCaps="false"
+                android:id="@+id/btn_playQuizOptionList"
+                android:fontFamily="@font/muli"
+                android:textColor="@color/colorTextHighEmphasise"
+
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

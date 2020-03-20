@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -79,7 +80,6 @@ public class QuizOptionsActivity extends AppCompatActivity {
                                     quizOptions.add(quizOption);
                                     Log.d(TAG, "onResponse: " + data.getJSONObject(i).toString());
                                 }
-                                Toast.makeText(QuizOptionsActivity.this, String.valueOf(data.length()), Toast.LENGTH_SHORT).show();
                                 quizOptionAdapter = new QuizOptionAdapter(QuizOptionsActivity.this, quizOptions);
                                 recyclerView.setAdapter(quizOptionAdapter);
                             } else {
@@ -142,8 +142,10 @@ public class QuizOptionsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
+        ImageView imgIcon = findViewById(R.id.imgBtn_tb_close);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
 
+        imgIcon.setImageBitmap((Bitmap) getIntent().getParcelableExtra("bitmap"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tv.setText(cat + " Challenges");
     }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
@@ -32,6 +33,7 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
 
         TextView tvTitle, tvDescription, tvRewardCoins, tvEntryCoins;
         MaterialCardView cardView, cardCoins;
+        MaterialButton btnPlay;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -40,8 +42,9 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
             tvRewardCoins = itemView.findViewById(R.id.tv_rewardCoinsQuizOption);
             tvDescription = itemView.findViewById(R.id.tv_quizOptionsDescriptionList);
             tvTitle = itemView.findViewById(R.id.tv_quizOptionsTitle);
-            cardCoins = itemView.findViewById(R.id.card_quizOptionCoins);
+            //cardCoins = itemView.findViewById(R.id.card_quizOptionCoins);
             cardView = itemView.findViewById(R.id.card_quizOptionItem);
+            btnPlay = itemView.findViewById(R.id.btn_playQuizOptionList);
 
         }
     }
@@ -70,7 +73,7 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
             }
         });
 
-        holder.cardCoins.setOnClickListener(new View.OnClickListener() {
+        holder.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, QuestionActivity.class);

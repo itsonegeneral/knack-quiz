@@ -3,6 +3,8 @@ package com.rstudio.knackquiz.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,17 +82,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.tvName.setText(category.getCategory());
 
 
-        GlideToVectorYou.justLoadImage((Activity)context, Uri.parse(category.getIconLink()), holder.imgIcon);
+        GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
         PushDownAnim.setPushDownAnimTo(holder.relativeLayout);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Bitmap bitmap = getBitmapFromView(holder.imgIcon);
+
                 HomeActivity activity = (HomeActivity) context;
                 ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.imgIcon, context.getString(R.string.toolbar_transition));
                 Intent intent = new Intent(context, QuizOptionsActivity.class);
                 intent.putExtra("cat", category.getCategory());
+                intent.putExtra("bitmap",bitmap);
                 context.startActivity(intent, activityOptionsCompat.toBundle());
             }
         });
@@ -100,6 +105,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public int getItemCount() {
         return categories.size();
+    }
+
+    public Bitmap getBitmapFromView(View view) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
     }
 
 

@@ -18,6 +18,7 @@ import androidx.transition.TransitionInflater;
 
 import com.google.android.material.button.MaterialButton;
 import com.rstudio.knackquiz.HomeActivity;
+import com.rstudio.knackquiz.LoginActivity;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
 
@@ -27,7 +28,7 @@ public class FragmentProfile extends Fragment {
     private LinearLayout layout;
     private HomeActivity homeActivity;
     private static final String TAG = "FragmentProfile";
-
+    private MaterialButton btSignin;
 
     public FragmentProfile() {
         context = getContext();
@@ -47,6 +48,16 @@ public class FragmentProfile extends Fragment {
             homeActivity.startPostponedEnterTransition();
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
         }
+
+        btSignin = layout.findViewById(R.id.bt_signinFragProfile);
+
+        btSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, LoginActivity.class));
+            }
+        });
+
         return layout;
     }
 

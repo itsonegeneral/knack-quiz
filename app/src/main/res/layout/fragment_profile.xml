@@ -24,12 +24,13 @@
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:text="Sign in"
+        android:id="@+id/bt_signinFragProfile"
         style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign in"
         android:textColor="@color/colorNavBarGreen"
-        app:rippleColor="#92E4B7"
-        android:layout_height="wrap_content"/>
+        app:rippleColor="#92E4B7" />
 
 
 </LinearLayout>

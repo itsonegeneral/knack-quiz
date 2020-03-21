@@ -10,9 +10,14 @@
     <include
         android:id="@+id/tb_createAccount"
         layout="@layout/toolbar_simple_titleonly"/>
-    
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/colorCardPrimaryDark"
+        app:contentPadding="20dp">
     <LinearLayout
-        android:layout_below="@+id/tb_createAccount"
         android:layout_width="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -24,24 +29,104 @@
             android:textColor="@color/colorTextLowEmphasise"
             android:fontFamily="@font/muli_bold"
             android:textSize="22sp"
-            android:padding="15dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
             android:layout_height="wrap_content"/>
         
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Full Name"
+            style="@style/LoginTextInputLayoutStyle"
+            android:hint="Username"
+            android:textColorHint="@color/colorTextLowEmphasise"
+            app:counterEnabled="true"
+            app:counterMaxLength="15"
+            app:counterTextColor="@color/colorTextLowEmphasise"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="300dp"
+                android:inputType="textPersonName"
+                android:outlineAmbientShadowColor="@color/colorTextLowEmphasise"
+                android:id="@+id/et_usernameCreateAccount"
+                android:textColorHint="@color/colorTextLowEmphasise"
+                android:textColor="@color/colorTextHighEmphasise"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            style="@style/LoginTextInputLayoutStyle"
+            android:hint="Email"
             android:textColorHint="@color/colorTextLowEmphasise"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:maxWidth="300dp"
+                android:inputType="textEmailAddress"
                 android:layout_width="300dp"
+                android:id="@+id/et_emailCreateAccount"
                 android:minWidth="200dp"
-                style="TextF"
+                android:textColorHint="@color/colorTextLowEmphasise"
+                android:textColor="@color/colorTextHighEmphasise"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
-        
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            style="@style/LoginTextInputLayoutStyle"
+            android:hint="Password"
+            android:textColorHint="@color/colorTextLowEmphasise"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:maxWidth="300dp"
+                android:inputType="textPassword"
+                android:layout_width="300dp"
+                android:id="@+id/et_pass1CreateAccount"
+                android:minWidth="200dp"
+                android:textColorHint="@color/colorTextLowEmphasise"
+                android:textColor="@color/colorTextHighEmphasise"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            style="@style/LoginTextInputLayoutStyle"
+            android:hint="Confirm Password"
+            android:textColorHint="@color/colorTextLowEmphasise"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:maxWidth="300dp"
+                android:inputType="textEmailAddress"
+                android:layout_width="300dp"
+                android:id="@+id/et_pass2CreateAccount"
+                android:minWidth="200dp"
+                android:textColorHint="@color/colorTextLowEmphasise"
+                android:textColor="@color/colorTextHighEmphasise"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <Button
+            android:layout_marginTop="8dp"
+            android:id="@+id/bt_signUp"
+            android:text="Sign Up"
+            android:textColor="@color/colorTextHighEmphasise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>

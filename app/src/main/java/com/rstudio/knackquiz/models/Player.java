@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
     private String playerID;
+    private String userName;
+    private String emailID;
     private long coins;
 
 
@@ -11,6 +13,22 @@ public class Player implements Serializable {
         coins = 0;
     }
 
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmailID() {
+        return emailID;
+    }
+
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
+    }
 
     public long getCoins() {
         return coins;

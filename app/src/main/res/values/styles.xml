@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorTextLowEmphasise</item>
+        <item name="colorPrimary">@color/colorTextLowEmphasise</item>
+        <item name="hintTextColor">@color/colorTextLowEmphasise</item>
+        <item name="fontFamily">@font/muli</item>
+    </style>
+
 </resources>

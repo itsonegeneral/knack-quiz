@@ -171,10 +171,10 @@ public class HomeActivity extends AppCompatActivity {
                 navigationTabBar.getModels().get(position).hideBadge();
                 if (position == 4) {
                     getSupportActionBar().hide();
-                    getSupportFragmentManager().beginTransaction()
+                  /*  getSupportFragmentManager().beginTransaction()
                             //.addSharedElement(imgProfileToolbar, "imagetransition")
                             .replace(R.id.frame_fragHolderHome, new FragmentProfile(HomeActivity.this))
-                            .commit();
+                            .commit();*/
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         postponeEnterTransition();
                     }

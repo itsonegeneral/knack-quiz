@@ -85,6 +85,16 @@
                 app:backgroundTint="#df5a55" />
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Create an Account"
+                android:textColor="@color/colorTextHighEmphasise"
+                android:padding="4dp"
+                android:id="@+id/tv_createAnAccountLogin"
+                android:gravity="center"
+                android:layout_height="wrap_content"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:paddingStart="20dp"

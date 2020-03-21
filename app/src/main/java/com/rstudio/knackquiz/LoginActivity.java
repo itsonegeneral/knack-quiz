@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private EditText etEmail, etPassword;
     private GoogleApiClient googleApiClient;
     private static final String TAG = "LoginActivity";
+    private TextView tvCreateAccount;
     private FirebaseAuth mAuth;
     private final int RC_SIGN_IN = 13;
 
@@ -54,6 +56,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (validateInput()) {
                     login();
                 }
+            }
+        });
+
+        tvCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,CreateAccountActivity.class));
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         });
 
@@ -176,6 +186,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void initValues() {
         btnLogin = findViewById(R.id.bt_login);
         signInButton = findViewById(R.id.gBtn_signin);
+        tvCreateAccount = findViewById(R.id.tv_createAnAccountLogin);
         etEmail = findViewById(R.id.et_emailLoginPage);
         etPassword = findViewById(R.id.et_passwordLoginPage);
 

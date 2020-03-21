@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.github.florent37.materialtextfield.MaterialTextField;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,13 +29,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.rstudio.knackquiz.models.Player;
 
 import java.util.regex.Pattern;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
 
-    private TextInputEditText etPass1,etPass2,etEmail,etUserName;
+    private TextInputEditText etPass1, etPass2, etEmail, etUserName;
     private Button btSignUp;
 
     @Override
@@ -47,7 +49,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateInput()){
+                if (validateInput()) {
                     checkUserNameExists();
                 }
             }
@@ -56,72 +58,97 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
-    private void checkUserNameExists(){
+    private void checkUserNameExists() {
+        String username = etUserName.getText().toString();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
-        ref.orderByChild("userName").equalTo("hello").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.orderByChild("userName").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    Toast.makeText(CreateAccountActivity.this, String.valueOf(dataSnapshot.getValue()), Toast.LENGTH_SHORT).show();
+                if (dataSnapshot.exists()) {
+                    Snackbar.make(findViewById(android.R.id.content), "Username is taken", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    createAccount();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(CreateAccountActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-    private void createAccount(){
-        String email= etEmail.getText().toString();
+    private void createAccount() {
+        final String email = etEmail.getText().toString();
         String pass = etPass1.getText().toString();
 
-        FirebaseAuth mAuth= FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
+                    Player player = new Player();
+                    player.setCoins(0);
+                    player.setEmailID(email);
+                    player.setUserName(etUserName.getText().toString());
+                    player.setPlayerID(mAuth.getUid());
 
-                }else{
+                    uploadPlayerData(player);
 
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content),"Faield to create account",Snackbar.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if(e instanceof FirebaseAuthUserCollisionException){
-                    Snackbar.make(findViewById(android.R.id.content),"Email already in use",Snackbar.LENGTH_SHORT).show();
-                }else{
-                    Snackbar.make(findViewById(android.R.id.content),"Account creation failed",Snackbar.LENGTH_SHORT).show();
+                if (e instanceof FirebaseAuthUserCollisionException) {
+                    Snackbar.make(findViewById(android.R.id.content), "Email already in use", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private boolean validateInput(){
+    private void uploadPlayerData(Player player){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Snackbar.make(findViewById(android.R.id.content),"Account Created",Snackbar.LENGTH_SHORT).show();
+                }else{
+                    Snackbar.make(findViewById(android.R.id.content),"Account creation failed",Snackbar.LENGTH_SHORT).show();
+                    //TODO delete user account
+                }
+            }
+        });
+    }
+
+    private boolean validateInput() {
         String username = etUserName.getText().toString();
         String email = etEmail.getText().toString();
         String pass1 = etPass1.getText().toString();
         String pass2 = etPass2.getText().toString();
-        if(username.isEmpty()){
+        if (username.isEmpty()) {
             etUserName.setError("Enter Username");
-        }else if(username.length()>15){
+        } else if (username.length() > 15) {
             etUserName.setError("Max length is 15");
-        }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Invalid Email");
-        }else if(pass1.isEmpty()){
+        } else if (pass1.isEmpty()) {
             etPass1.setError("Enter Password");
-        }else if (!pass1.equals(pass2)){
+        } else if (!pass1.equals(pass2)) {
             etPass2.setError("Passwords do not match");
-        }else{
+        } else {
             return true;
         }
         return false;
     }
 
-    private void initValues(){
+    private void initValues() {
         etUserName = findViewById(R.id.et_usernameCreateAccount);
         etPass1 = findViewById(R.id.et_pass1CreateAccount);
         etPass2 = findViewById(R.id.et_pass2CreateAccount);
@@ -132,8 +159,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
 
-
-    private void setToolbar(){
+    private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.tb_createAccount);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -152,6 +178,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

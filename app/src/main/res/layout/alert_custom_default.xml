@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    app:cardBackgroundColor="@color/colorCardPrimaryDark"
-    app:cardElevation="5dp"
-    app:contentPadding="14dp">
+    android:background="@color/colorCardPrimaryDark"
+
+    android:padding="14dp">
+
 
     <LinearLayout
-        android:layout_width="240dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -19,16 +22,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/muli_bold"
             android:text="Confirm"
-            android:textColor="@color/colorTextHighEmphasise"
-            android:textSize="?materialAlertDialogTitleTextStyle" />
+            android:textColor="@color/colorTextHighEmphasise" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/muli"
             android:text="Do you really want to exit ?"
-            android:textColor="@color/colorTextHighEmphasise"
-            android:textSize="?materialAlertDialogTitleTextStyle" />
+            android:textColor="@color/colorTextHighEmphasise" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,15 +46,14 @@
                 android:layout_marginEnd="8dp"
                 android:text="No"
                 android:textAllCaps="false"
-                android:theme="@style/Widget.MaterialComponents.Button.TextButton" />
+                android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yes"
                 android:textAllCaps="false"
-                android:textColor="@color/colorTextHighEmphasise"
-                android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                android:textColor="@color/colorTextHighEmphasise" />
 
 
         </LinearLayout>
@@ -61,4 +61,4 @@
     </LinearLayout>
 
 
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

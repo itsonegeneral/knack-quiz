@@ -1,12 +1,15 @@
 package com.rstudio.knackquiz;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,12 +38,14 @@ import com.rstudio.knackquiz.models.Player;
 
 import java.util.regex.Pattern;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class CreateAccountActivity extends Activity {
 
 
     private static final String TAG = "CreateAccountActivity";
     private TextInputEditText etPass1, etPass2, etEmail, etUserName;
     private Button btSignUp;
+    private AlertDialog alertDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,16 +167,25 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         btSignUp = findViewById(R.id.bt_signUp);
+
+
+        //Setup Alert Dialogue
+        AlertDialog.Builder builder  = new AlertDialog.Builder(CreateAccountActivity.this);
+        View customConfirmView = LayoutInflater.from(CreateAccountActivity.this).inflate(R.layout.alert_custom_default,null);
+        builder.setView(R.layout.alert_custom_default);
+        alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
 
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.tb_createAccount);
-        setSupportActionBar(toolbar);
+     /*   setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
-        tv.setText("Create Account");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+     /*   TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
+        tv.setText("Create Account");*/
     }
 
 

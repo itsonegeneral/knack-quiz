@@ -31,7 +31,8 @@ public class FragmentProfile extends Fragment {
     private MaterialButton btSignin;
 
     public FragmentProfile() {
-        context = getContext();
+        if (context == null)
+            context = getContext();
     }
 
     public FragmentProfile(Context context) {
@@ -45,7 +46,6 @@ public class FragmentProfile extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (LinearLayout) inflater.inflate(R.layout.fragment_profile, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            homeActivity.startPostponedEnterTransition();
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
         }
 

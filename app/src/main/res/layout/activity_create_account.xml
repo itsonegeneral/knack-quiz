@@ -106,7 +106,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:maxWidth="300dp"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:layout_width="300dp"
                 android:id="@+id/et_pass2CreateAccount"
                 android:minWidth="200dp"

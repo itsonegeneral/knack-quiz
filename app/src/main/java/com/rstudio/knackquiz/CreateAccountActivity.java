@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.models.Player;
 
 import java.util.regex.Pattern;
@@ -36,6 +38,7 @@ import java.util.regex.Pattern;
 public class CreateAccountActivity extends AppCompatActivity {
 
 
+    private static final String TAG = "CreateAccountActivity";
     private TextInputEditText etPass1, etPass2, etEmail, etUserName;
     private Button btSignUp;
 
@@ -54,7 +57,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         });
-        checkUserNameExists();
 
     }
 
@@ -106,18 +108,20 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (e instanceof FirebaseAuthUserCollisionException) {
                     Snackbar.make(findViewById(android.R.id.content), "Email already in use", Snackbar.LENGTH_SHORT).show();
                 } else {
+                    Log.d(TAG, "onFailure: "  + e.getMessage());
                     Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void uploadPlayerData(Player player){
+    private void uploadPlayerData(final Player player){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    DataStore.setCurrentPlayer(player,getApplicationContext());
                     Snackbar.make(findViewById(android.R.id.content),"Account Created",Snackbar.LENGTH_SHORT).show();
                 }else{
                     Snackbar.make(findViewById(android.R.id.content),"Account creation failed",Snackbar.LENGTH_SHORT).show();
@@ -140,6 +144,8 @@ public class CreateAccountActivity extends AppCompatActivity {
             etEmail.setError("Invalid Email");
         } else if (pass1.isEmpty()) {
             etPass1.setError("Enter Password");
+        }else if(pass1.length()<6){
+            etPass1.setError("Too short");
         } else if (!pass1.equals(pass2)) {
             etPass2.setError("Passwords do not match");
         } else {

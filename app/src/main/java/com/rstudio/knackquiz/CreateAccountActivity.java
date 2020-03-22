@@ -99,7 +99,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     uploadPlayerData(player);
 
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content),"Faield to create account",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Faield to create account", Snackbar.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -108,23 +108,23 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (e instanceof FirebaseAuthUserCollisionException) {
                     Snackbar.make(findViewById(android.R.id.content), "Email already in use", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    Log.d(TAG, "onFailure: "  + e.getMessage());
+                    Log.d(TAG, "onFailure: " + e.getMessage());
                     Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void uploadPlayerData(final Player player){
+    private void uploadPlayerData(final Player player) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    DataStore.setCurrentPlayer(player,getApplicationContext());
-                    Snackbar.make(findViewById(android.R.id.content),"Account Created",Snackbar.LENGTH_SHORT).show();
-                }else{
-                    Snackbar.make(findViewById(android.R.id.content),"Account creation failed",Snackbar.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    DataStore.setCurrentPlayer(player, getApplicationContext());
+                    Snackbar.make(findViewById(android.R.id.content), "Account Created", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
                     //TODO delete user account
                 }
             }
@@ -144,7 +144,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             etEmail.setError("Invalid Email");
         } else if (pass1.isEmpty()) {
             etPass1.setError("Enter Password");
-        }else if(pass1.length()<6){
+        } else if (pass1.length() < 6) {
             etPass1.setError("Too short");
         } else if (!pass1.equals(pass2)) {
             etPass2.setError("Passwords do not match");

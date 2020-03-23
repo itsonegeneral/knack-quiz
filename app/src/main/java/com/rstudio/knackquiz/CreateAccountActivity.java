@@ -51,6 +51,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private LottieAnimationView lottieView;
     private AlertDialog.Builder builder;
+    private TextView tvLoadingText;
 
 
     @Override
@@ -76,12 +77,15 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private void checkUserNameExists() {
         String username = etUserName.getText().toString();
+        showLoadingAlert(); //First showing alert
+        tvLoadingText.setText("Creating your account...");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("registered");
         ref.orderByChild("userName").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     Snackbar.make(findViewById(android.R.id.content), "Username is taken", Snackbar.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
                 } else {
                     askForAccountSync();
                 }
@@ -89,28 +93,29 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                alertDialog.dismiss();
                 Toast.makeText(CreateAccountActivity.this, "Error occurred!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     //Ask user to sync current progress with account
-    private void askForAccountSync(){
+    private void askForAccountSync() {
         Player player = DataStore.getCurrentPlayer(this);
-        if(player.getCoins() > 0){
+        if (player.getCoins() > 0) {
             askMigration();
-        }else{
+        } else {
             //create account if no coin balance in account
             //TODO check for also level progress in future
             createAccount();
         }
     }
 
-    private void askMigration(){
-        View customView = LayoutInflater.from(this).inflate(R.layout.alert_custom_default,null);
+    private void askMigration() {
+        View customView = LayoutInflater.from(this).inflate(R.layout.alert_custom_default, null);
 
-        TextView tvTitle,tvMessage;
-        MaterialButton btOK,btNo;
+        TextView tvTitle, tvMessage;
+        MaterialButton btOK, btNo;
         //init views
         btOK = customView.findViewById(R.id.bt_YesAlertDefault);
         btNo = customView.findViewById(R.id.bt_NoAlertDefault);
@@ -143,7 +148,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private void createAccount() {
         final String email = etEmail.getText().toString();
         String pass = etPass1.getText().toString();
-
+        updateLoadingAlertText("Creating your account...");
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -158,12 +163,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                     uploadPlayerData(player);
 
                 } else {
+                    alertDialog.dismiss();
                     Snackbar.make(findViewById(android.R.id.content), "Faield to create account", Snackbar.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                alertDialog.dismiss();
                 if (e instanceof FirebaseAuthUserCollisionException) {
                     Snackbar.make(findViewById(android.R.id.content), "Email already in use", Snackbar.LENGTH_SHORT).show();
                 } else {
@@ -175,6 +182,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void uploadPlayerData(final Player player) {
+        updateLoadingAlertText("Setting up your account...");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("registered");
         ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -182,9 +190,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DataStore.setCurrentPlayer(player, getApplicationContext());
                     Snackbar.make(findViewById(android.R.id.content), "Account Created", Snackbar.LENGTH_SHORT).show();
+                    showSuccessAlert();
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
                     //TODO delete user account
+                    alertDialog.dismiss();
                 }
             }
         });
@@ -197,15 +207,24 @@ public class CreateAccountActivity extends AppCompatActivity {
         String pass2 = etPass2.getText().toString();
         if (username.isEmpty()) {
             etUserName.setError("Enter Username");
+            etUserName.requestFocus();
+        } else if (username.length() < 4) {
+            etUserName.setError("Too short");
+            etUserName.requestFocus();
         } else if (username.length() > 15) {
             etUserName.setError("Max length is 15");
+            etUserName.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Invalid Email");
+            etEmail.requestFocus();
         } else if (pass1.isEmpty()) {
             etPass1.setError("Enter Password");
+            etPass1.requestFocus();
         } else if (pass1.length() < 6) {
             etPass1.setError("Too short");
+            etPass1.requestFocus();
         } else if (!pass1.equals(pass2)) {
+            etPass2.requestFocus();
             etPass2.setError("Passwords do not match");
         } else {
             return true;
@@ -225,24 +244,33 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         //Setup Alert Dialogue
         builder = new AlertDialog.Builder(CreateAccountActivity.this);
-        View customView = LayoutInflater.from(CreateAccountActivity.this).inflate(R.layout.alert_loading_view, null);
 
+
+    }
+
+    private void showLoadingAlert() {
+        View customView = LayoutInflater.from(CreateAccountActivity.this).inflate(R.layout.alert_loading_view, null);
+        tvLoadingText = customView.findViewById(R.id.tv_loadingTextLoadingAlert);
         lottieView = customView.findViewById(R.id.lottieViewLoadingAlert);
         lottieView.setAnimation(R.raw.loading_bouncing);
         lottieView.loop(true);
         lottieView.playAnimation();
-
-        final TextView tvLoadingText = customView.findViewById(R.id.tv_loadingTextLoadingAlert);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                tvLoadingText.setText("Setting up your account...");
-            }
-        },3000);
         builder.setView(customView);
         alertDialog = builder.create();
         alertDialog.show();
+    }
 
+    private void showSuccessAlert() {
+        lottieView.setAnimation(R.raw.anim_green_tick);
+        lottieView.loop(false);
+        lottieView.playAnimation();
+        tvLoadingText.setText("Account created successfully!");
+
+
+    }
+
+    private void updateLoadingAlertText(String loadingText) {
+        tvLoadingText.setText(loadingText);
     }
 
 

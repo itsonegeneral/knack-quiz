@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.PatternMatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -39,11 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rstudio.knackquiz.datastore.DataStore;
-import com.rstudio.knackquiz.helpers.DBClass;
 import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.models.Player;
-
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -59,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private AlertDialog.Builder builder;
     private TextView tvLoadingText;
     private AlertDialog alertDialog;
-    private Player player=new Player();
+    private Player mPlayer =new Player();
     private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,11 +126,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount account = result.getSignInAccount();
             idToken = account.getIdToken();
             name = account.getDisplayName();
-            player.setEmailID(account.getEmail());
-            player.setPhotoURL(String.valueOf(account.getPhotoUrl()));
-            player.setUserName(account.getEmail().substring(0,account.getEmail().indexOf("@")));
+            mPlayer.setEmailID(account.getEmail());
+            mPlayer.setPhotoURL(String.valueOf(account.getPhotoUrl()));
+            mPlayer.setUserName(account.getEmail().substring(0,account.getEmail().indexOf("@")));
             // you can store user data to SharedPreference
-            Log.d(TAG, "handleSignInResult: UserName" + player.getUserName());
+            Log.d(TAG, "handleSignInResult: UserName" + mPlayer.getUserName());
             AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
             firebaseAuthWithGoogle(credential);
         } else {
@@ -153,10 +147,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                      @Override
                      public void onComplete(@NonNull Task<AuthResult> task) {
                          String id = firebaseAuth.getUid();
-                         player.setPlayerID(id);
+                         mPlayer.setPlayerID(id);
                          Log.d(TAG, "onComplete:handle " + id);
                          if(task.isSuccessful()){
-                             getPlayerData(player);
+                             getPlayerData(mPlayer);
                          }else{
                              Log.w(TAG, "signInWithCredential" + task.getException().getMessage());
                              Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -174,7 +168,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    getExistingPlayerData();
+                    mPlayer = dataSnapshot.getValue(Player.class);
+                    DataStore.setCurrentPlayer(mPlayer,LoginActivity.this);
+                    Snackbar.make(findViewById(android.R.id.content),"Welcome " + mPlayer.getUserName(),Snackbar.LENGTH_SHORT).show();
+                    finish();
+                    alertDialog.dismiss();
                 }else{
                     uploadPlayerData(player);
                 }
@@ -193,7 +191,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     DataStore.setCurrentPlayer(player, getApplicationContext());
-                    Snackbar.make(findViewById(android.R.id.content), "Welcome "+ player.getUserName(), Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Welcome " + mPlayer.getUserName(),Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                    finish();
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
                 }
@@ -209,11 +209,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    player = dataSnapshot.getValue(Player.class);
-                    DataStore.setCurrentPlayer(player,LoginActivity.this);
-                    Snackbar.make(findViewById(android.R.id.content),"Welcome " + player.getUserName(),Snackbar.LENGTH_SHORT).show();
+                    mPlayer = dataSnapshot.getValue(Player.class);
+                    DataStore.setCurrentPlayer(mPlayer,LoginActivity.this);
+                    Toast.makeText(getApplicationContext(),"Welcome " + mPlayer.getUserName(),Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                    finish();
                 }else{
-                    mAuth.signOut();
+                    mAuth.signOut();   //End of function chain
                     Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
                 alertDialog.dismiss();

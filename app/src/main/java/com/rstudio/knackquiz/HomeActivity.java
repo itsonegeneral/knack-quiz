@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.animation.LPaint;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,10 +51,12 @@ import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.helpers.KeyStore;
 import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Player;
+import com.squareup.picasso.Picasso;
 
 import java.io.DataInputStream;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class HomeActivity extends AppCompatActivity {
@@ -62,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView tvCoins, tvUserName;
     private Player player;
     private static final String TAG = "HomeActivity";
-    private ImageView imgProfileToolbar;
+    private CircleImageView imgProfileToolbar;
 
 
     @Override
@@ -212,7 +215,7 @@ public class HomeActivity extends AppCompatActivity {
     private void loadData() {
         DatabaseReference ref;
         Player tplr = DataStore.getCurrentPlayer(this);
-        if (!tplr.getPlayerRegisterType().equalsIgnoreCase(KeyStore.UNREGISTERED_USER)) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
         } else {
             ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_UNREGISTERED);
@@ -223,7 +226,10 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     player = dataSnapshot.getValue(Player.class);
-
+                    tvUserName.setText(player.getUserName());
+                    if(player.getPhotoURL()!=null){
+                        Picasso.get().load(player.getPhotoURL()).into(imgProfileToolbar);
+                    }
                     tvCoins.setText(String.valueOf(player.getCoins()));
                 }
             }
@@ -239,6 +245,7 @@ public class HomeActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.tb_activityHome);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        tvUserName = findViewById(R.id.tb_tvusernameMainCommmon);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
         imgProfileToolbar = findViewById(R.id.img_toolbarProfile);
     }

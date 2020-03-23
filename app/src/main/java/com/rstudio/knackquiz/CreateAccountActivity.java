@@ -69,18 +69,21 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
 
+
+        Log.d(TAG, "askForAccountSync: " + DataStore.getCurrentPlayerID(this));
+
     }
 
     private void checkUserNameExists() {
         String username = etUserName.getText().toString();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("registered");
         ref.orderByChild("userName").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     Snackbar.make(findViewById(android.R.id.content), "Username is taken", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    askForAccountSycn();
+                    askForAccountSync();
                 }
             }
 
@@ -92,7 +95,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     //Ask user to sync current progress with account
-    private void askForAccountSycn(){
+    private void askForAccountSync(){
         Player player = DataStore.getCurrentPlayer(this);
         if(player.getCoins() > 0){
             askMigration();

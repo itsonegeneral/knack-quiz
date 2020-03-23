@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -27,10 +28,20 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.rstudio.knackquiz.datastore.DataStore;
+import com.rstudio.knackquiz.helpers.DBClass;
+import com.rstudio.knackquiz.helpers.DBKeys;
+import com.rstudio.knackquiz.models.Player;
 
 import java.util.regex.Pattern;
 
@@ -48,7 +59,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private AlertDialog.Builder builder;
     private TextView tvLoadingText;
     private AlertDialog alertDialog;
-
+    private Player player=new Player();
+    private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +76,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (validateInput()) {
                     login();
                 }
-                showLoadingAlert();
             }
         });
 
@@ -116,15 +127,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
+        String idToken,name;
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-          /*  idToken = account.getIdToken();
+            idToken = account.getIdToken();
             name = account.getDisplayName();
-            email = account.getEmail();
+            player.setEmailID(account.getEmail());
+            player.setUserName(account.getEmail().substring(0,account.getEmail().indexOf("@")));
             // you can store user data to SharedPreference
+            Log.d(TAG, "handleSignInResult: UserName" + player.getUserName());
             AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-            firebaseAuthWithGoogle(credential);*/
+            firebaseAuthWithGoogle(credential);
         } else {
             // Google Sign In failed, update UI appropriately
             Log.e(TAG, "Login Unsuccessful. " + result);
@@ -132,38 +145,98 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    /* private void firebaseAuthWithGoogle(AuthCredential credential){
-
+     private void firebaseAuthWithGoogle(AuthCredential credential){
+        showLoadingAlert();
          firebaseAuth.signInWithCredential(credential)
                  .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                      @Override
                      public void onComplete(@NonNull Task<AuthResult> task) {
-                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                         String id = firebaseAuth.getUid();
+                         player.setPlayerID(id);
+                         Log.d(TAG, "onComplete:handle " + id);
                          if(task.isSuccessful()){
-                             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                             gotoProfile();
+                             getPlayerData(player);
                          }else{
                              Log.w(TAG, "signInWithCredential" + task.getException().getMessage());
-                             task.getException().printStackTrace();
-                             Toast.makeText(MainActivity.this, "Authentication failed.",
+                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                      Toast.LENGTH_SHORT).show();
+                             alertDialog.dismiss();
                          }
 
                      }
                  });
      }
 
+    private void getPlayerData(final Player player) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
+        ref.child(player.getPlayerID()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    getExistingPlayerData();
+                }else{
+                    uploadPlayerData(player);
+                }
+            }
 
- */
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void uploadPlayerData(final Player player) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
+        ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    DataStore.setCurrentPlayer(player, getApplicationContext());
+                    Snackbar.make(findViewById(android.R.id.content), "Welcome "+ player.getUserName(), Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Account creation failed", Snackbar.LENGTH_SHORT).show();
+                }
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    private void getExistingPlayerData(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS)
+                .child(DBKeys.KEY_REGISTERED);
+        ref.child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    player = dataSnapshot.getValue(Player.class);
+                    Snackbar.make(findViewById(android.R.id.content),"Welcome " + player.getUserName(),Snackbar.LENGTH_SHORT).show();
+                }else{
+                    mAuth.signOut();
+                    Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+                alertDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
     private boolean validateInput() {
         String email = etEmail.getText().toString();
         String pass = etEmail.getText().toString();
 
         if (email.isEmpty()) {
             etEmail.setError("Enter email");
+            etEmail.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Invalid email");
+            etEmail.requestFocus();
         } else if (pass.isEmpty()) {
+            etPassword.requestFocus();
             etPassword.setError("Enter Password");
         } else {
             return true;
@@ -177,15 +250,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         String email = etEmail.getText().toString();
         String pass = etPassword.getText().toString();
-
+        showLoadingAlert();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    getExistingPlayerData();
                     Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failed " + task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
                 }
             }
         });
@@ -199,6 +274,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         etEmail = findViewById(R.id.et_emailLoginPage);
         etPassword = findViewById(R.id.et_passwordLoginPage);
         builder = new AlertDialog.Builder(this);
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override

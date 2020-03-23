@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.animation.LPaint;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +46,8 @@ import com.rstudio.knackquiz.fragments.bottomnav.FragmentHome;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentLeaderboard;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentProfile;
 import com.rstudio.knackquiz.helpers.CategoryHelper;
+import com.rstudio.knackquiz.helpers.DBKeys;
+import com.rstudio.knackquiz.helpers.KeyStore;
 import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Player;
 
@@ -60,7 +63,6 @@ public class HomeActivity extends AppCompatActivity {
     private Player player;
     private static final String TAG = "HomeActivity";
     private ImageView imgProfileToolbar;
-
 
 
     @Override
@@ -79,12 +81,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void checkFirstTime(){
-        SharedPreferences sharedPreferences = getSharedPreferences(DataStore.FIRSTTIME,MODE_PRIVATE);
-        String status = sharedPreferences.getString(DataStore.STATUS,"");
-        if(status.isEmpty()){
+    private void checkFirstTime() {
+        SharedPreferences sharedPreferences = getSharedPreferences(DataStore.FIRSTTIME, MODE_PRIVATE);
+        String status = sharedPreferences.getString(DataStore.STATUS, "");
+        if (status.isEmpty()) {
             finish();
-            startActivity(new Intent(this,IntroActivity.class));
+            startActivity(new Intent(this, IntroActivity.class));
         }
     }
 
@@ -208,7 +210,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference ref;
+        Player tplr = DataStore.getCurrentPlayer(this);
+        if (!tplr.getPlayerRegisterType().equalsIgnoreCase(KeyStore.UNREGISTERED_USER)) {
+            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
+        } else {
+            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_UNREGISTERED);
+        }
+
         ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

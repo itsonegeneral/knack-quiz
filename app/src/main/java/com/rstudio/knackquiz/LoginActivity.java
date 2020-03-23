@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PatternMatcher;
 import android.util.Log;
 import android.util.Patterns;
@@ -30,6 +31,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.regex.Pattern;
 
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
+
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private MaterialButton btnLogin;
@@ -40,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private TextView tvCreateAccount;
     private FirebaseAuth mAuth;
     private final int RC_SIGN_IN = 13;
+    private CircularProgressButton btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         setUpGoogleApi();
 
+
+        btn = findViewById(R.id.btnLoading_login);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn.startAnimation();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btn.revertAnimation();
+                    }
+                },3000);
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

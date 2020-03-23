@@ -38,15 +38,15 @@
                 app:mtf_labelColor="@color/colorTextLowEmphasise">
 
                 <EditText
+                    android:id="@+id/et_emailLoginPage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorCardPrimaryDark"
                     android:fontFamily="@font/muli"
                     android:hint="@string/email"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorTextLowEmphasise"
-                    android:id="@+id/et_emailLoginPage"
                     android:textSize="15sp" />
 
             </com.github.florent37.materialtextfield.MaterialTextField>
@@ -59,6 +59,7 @@
                 app:mtf_labelColor="@color/colorTextLowEmphasise">
 
                 <EditText
+                    android:id="@+id/et_passwordLoginPage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorTextLowEmphasise"
@@ -67,41 +68,49 @@
                     android:inputType="textPassword"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorTextLowEmphasise"
-                    android:id="@+id/et_passwordLoginPage"
                     android:textSize="15sp" />
 
 
             </com.github.florent37.materialtextfield.MaterialTextField>
 
 
+            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                android:id="@+id/btnLoading_login"
+                android:background="#df5a55"
+                android:text="Login"
+                android:fontFamily="@font/muli"
+                android:textColor="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="56dp" />
+
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_login"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/muli"
-                android:id="@+id/bt_login"
                 android:text="LOGIN"
                 app:backgroundTint="#df5a55" />
 
 
             <TextView
-                android:layout_width="match_parent"
-                android:text="Create an Account"
-                android:textColor="@color/colorTextHighEmphasise"
-                android:padding="4dp"
                 android:id="@+id/tv_createAnAccountLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_height="wrap_content"/>
+                android:padding="4dp"
+                android:text="Create an Account"
+                android:textColor="@color/colorTextHighEmphasise" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
 
                 <View
                     android:layout_width="0dp"
@@ -125,11 +134,11 @@
             </LinearLayout>
 
             <com.google.android.gms.common.SignInButton
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
                 android:id="@+id/gBtn_signin"
-                android:layout_height="wrap_content"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp" />
 
         </LinearLayout>
 

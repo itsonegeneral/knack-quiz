@@ -273,7 +273,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         tvLoadingText.setText(loadingText);
     }
 
-
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.tb_createAccount);
         setSupportActionBar(toolbar);
@@ -282,7 +281,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
         tv.setText("Create Account");
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -295,4 +293,5 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
 }

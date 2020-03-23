@@ -8,6 +8,16 @@ public class Player implements Serializable {
     private String emailID;
     private long coins;
 
+    public String getPlayerRegisterType() {
+        return playerRegisterType;
+    }
+
+    public void setPlayerRegisterType(String playerRegisterType) {
+        this.playerRegisterType = playerRegisterType;
+    }
+
+    private String playerRegisterType;
+
 
     public Player() {
         coins = 0;
@@ -17,6 +27,7 @@ public class Player implements Serializable {
     public String getUserName() {
         return userName;
     }
+
 
     public void setUserName(String userName) {
         this.userName = userName;

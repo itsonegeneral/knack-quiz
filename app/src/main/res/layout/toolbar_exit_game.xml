@@ -21,7 +21,6 @@
             android:layout_width="30dp"
             android:transitionName="@string/toolbar_transition"
             android:layout_height="30dp"
-            android:background="@drawable/ic_cat_cricket"
             android:clickable="true"
             android:focusable="true" />
 
@@ -31,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:text="Quiz Wiz"
+            android:text="Knack Quiz"
             android:textColor="@color/colorTextOffWhite"
             android:textSize="17sp" />
 

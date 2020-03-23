@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:padding="15dp"
+    android:layout_gravity="center"
+    android:background="@color/colorCardPrimaryDark"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_height="wrap_content">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="100dp"
+        android:id="@+id/lottieViewLoadingAlert"
+        android:layout_height="80dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:text="Creating your account ..."
+        android:textColor="@color/colorTextHighEmphasise"
+        android:id="@+id/tv_loadingTextLoadingAlert"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

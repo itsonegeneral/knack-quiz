@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -17,11 +19,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.client.Firebase;
 import com.github.florent37.materialtextfield.MaterialTextField;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -38,13 +42,15 @@ import com.rstudio.knackquiz.models.Player;
 
 import java.util.regex.Pattern;
 
-public class CreateAccountActivity extends Activity {
+public class CreateAccountActivity extends AppCompatActivity {
 
 
     private static final String TAG = "CreateAccountActivity";
     private TextInputEditText etPass1, etPass2, etEmail, etUserName;
     private Button btSignUp;
     private AlertDialog alertDialog;
+    private LottieAnimationView lottieView;
+    private AlertDialog.Builder builder;
 
 
     @Override
@@ -74,7 +80,7 @@ public class CreateAccountActivity extends Activity {
                 if (dataSnapshot.exists()) {
                     Snackbar.make(findViewById(android.R.id.content), "Username is taken", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    createAccount();
+                    askForAccountSycn();
                 }
             }
 
@@ -85,6 +91,51 @@ public class CreateAccountActivity extends Activity {
         });
     }
 
+    //Ask user to sync current progress with account
+    private void askForAccountSycn(){
+        Player player = DataStore.getCurrentPlayer(this);
+        if(player.getCoins() > 0){
+            askMigration();
+        }else{
+            //create account if no coin balance in account
+            //TODO check for also level progress in future
+            createAccount();
+        }
+    }
+
+    private void askMigration(){
+        View customView = LayoutInflater.from(this).inflate(R.layout.alert_custom_default,null);
+
+        TextView tvTitle,tvMessage;
+        MaterialButton btOK,btNo;
+        //init views
+        btOK = customView.findViewById(R.id.bt_YesAlertDefault);
+        btNo = customView.findViewById(R.id.bt_NoAlertDefault);
+        tvTitle = customView.findViewById(R.id.tv_TitleAlertDefault);
+        tvMessage = customView.findViewById(R.id.tv_MessageAlertDefault);
+
+
+        //Set TextView Values
+        tvTitle.setText("Sync");
+        tvMessage.setText("Do you want to sync current progress?");
+
+        btNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        builder.setView(customView);
+        builder.show();
+    }
 
     private void createAccount() {
         final String email = etEmail.getText().toString();
@@ -121,7 +172,7 @@ public class CreateAccountActivity extends Activity {
     }
 
     private void uploadPlayerData(final Player player) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("registered");
         ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -170,9 +221,22 @@ public class CreateAccountActivity extends Activity {
 
 
         //Setup Alert Dialogue
-        AlertDialog.Builder builder  = new AlertDialog.Builder(CreateAccountActivity.this);
-        View customConfirmView = LayoutInflater.from(CreateAccountActivity.this).inflate(R.layout.alert_custom_default,null);
-        builder.setView(R.layout.alert_custom_default);
+        builder = new AlertDialog.Builder(CreateAccountActivity.this);
+        View customView = LayoutInflater.from(CreateAccountActivity.this).inflate(R.layout.alert_loading_view, null);
+
+        lottieView = customView.findViewById(R.id.lottieViewLoadingAlert);
+        lottieView.setAnimation(R.raw.loading_bouncing);
+        lottieView.loop(true);
+        lottieView.playAnimation();
+
+        final TextView tvLoadingText = customView.findViewById(R.id.tv_loadingTextLoadingAlert);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tvLoadingText.setText("Setting up your account...");
+            }
+        },3000);
+        builder.setView(customView);
         alertDialog = builder.create();
         alertDialog.show();
 
@@ -181,11 +245,11 @@ public class CreateAccountActivity extends Activity {
 
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.tb_createAccount);
-     /*   setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-     /*   TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
-        tv.setText("Create Account");*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
+        tv.setText("Create Account");
     }
 
 

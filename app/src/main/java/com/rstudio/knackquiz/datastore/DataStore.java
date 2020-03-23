@@ -37,4 +37,12 @@ public abstract class DataStore {
         player = gson.fromJson(json,Player.class);
         return player.getPlayerID();
     }
+
+    public static Player getCurrentPlayer(Context context){
+        sharedPreferences = context.getSharedPreferences(USER,Context.MODE_PRIVATE);
+        String json = sharedPreferences.getString(PLAYER,"");
+        Gson gson = new Gson();
+        player = gson.fromJson(json,Player.class);
+        return player;
+    }
 }

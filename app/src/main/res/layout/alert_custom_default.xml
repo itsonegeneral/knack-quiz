@@ -22,14 +22,18 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/muli_bold"
             android:text="Confirm"
+            android:id="@+id/tv_TitleAlertDefault"
+            android:layout_marginBottom="5dp"
+            android:textSize="17sp"
             android:textColor="@color/colorTextHighEmphasise" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_MessageAlertDefault"
             android:fontFamily="@font/muli"
             android:text="Do you really want to exit ?"
-            android:textColor="@color/colorTextHighEmphasise" />
+            android:textColor="@color/colorTextLowEmphasise" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,17 +45,21 @@
 
             <Button
 
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:id="@+id/bt_NoAlertDefault"
                 android:text="No"
                 android:textAllCaps="false"
-                android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                android:textColor="@color/colorTextHighEmphasise"
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
 
             <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/bt_YesAlertDefault"
                 android:text="Yes"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:textAllCaps="false"
                 android:textColor="@color/colorTextHighEmphasise" />
 

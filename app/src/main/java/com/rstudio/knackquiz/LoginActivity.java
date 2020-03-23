@@ -133,6 +133,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             idToken = account.getIdToken();
             name = account.getDisplayName();
             player.setEmailID(account.getEmail());
+            player.setPhotoURL(String.valueOf(account.getPhotoUrl()));
             player.setUserName(account.getEmail().substring(0,account.getEmail().indexOf("@")));
             // you can store user data to SharedPreference
             Log.d(TAG, "handleSignInResult: UserName" + player.getUserName());
@@ -209,6 +210,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     player = dataSnapshot.getValue(Player.class);
+                    DataStore.setCurrentPlayer(player,LoginActivity.this);
                     Snackbar.make(findViewById(android.R.id.content),"Welcome " + player.getUserName(),Snackbar.LENGTH_SHORT).show();
                 }else{
                     mAuth.signOut();
@@ -246,7 +248,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void login() {
-        Toast.makeText(this, "Logging in", Toast.LENGTH_SHORT).show();
 
         String email = etEmail.getText().toString();
         String pass = etPassword.getText().toString();

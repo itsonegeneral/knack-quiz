@@ -7,6 +7,7 @@ public class Player implements Serializable {
     private String userName;
     private String emailID;
     private String photoURL;
+    private String signInType;
     private long coins;
 
     public String getPlayerRegisterType() {
@@ -19,6 +20,14 @@ public class Player implements Serializable {
 
     public String getPhotoURL() {
         return photoURL;
+    }
+
+    public String getSignInType() {
+        return signInType;
+    }
+
+    public void setSignInType(String signInType) {
+        this.signInType = signInType;
     }
 
     public void setPhotoURL(String photoURL) {

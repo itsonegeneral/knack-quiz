@@ -61,9 +61,10 @@ public class FragmentProfile extends Fragment {
         tvTest.setVisibility(View.GONE);
         llSignInLayout = layout.findViewById(R.id.ll_profileSignInLayout);
         llSignInLayout.setVisibility(View.GONE);
+        llSignInLayout.setVisibility(View.VISIBLE);
 
         if(mAuth.getCurrentUser()==null){
-            llSignInLayout.setVisibility(View.VISIBLE);
+
         }else{
             tvTest.setVisibility(View.VISIBLE);
             tvTest.setText(mAuth.getUid());

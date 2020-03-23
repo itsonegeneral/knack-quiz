@@ -1,6 +1,7 @@
 package com.rstudio.knackquiz;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,11 +10,13 @@ import android.os.Handler;
 import android.os.PatternMatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,8 +34,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.regex.Pattern;
 
-import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
-
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private MaterialButton btnLogin;
@@ -43,7 +44,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private TextView tvCreateAccount;
     private FirebaseAuth mAuth;
     private final int RC_SIGN_IN = 13;
-    private CircularProgressButton btn;
+    private LottieAnimationView lottieView;
+    private AlertDialog.Builder builder;
+    private TextView tvLoadingText;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,34 +58,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setUpGoogleApi();
 
 
-        btn = findViewById(R.id.btnLoading_login);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn.startAnimation();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        btn.revertAnimation();
-                    }
-                },3000);
-            }
-        });
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateInput()) {
                     login();
                 }
+                showLoadingAlert();
             }
         });
 
         tvCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,CreateAccountActivity.class));
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -111,21 +102,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(intent,RC_SIGN_IN);
+        startActivityForResult(intent, RC_SIGN_IN);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result){
-        if(result.isSuccess()){
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
           /*  idToken = account.getIdToken();
@@ -134,9 +125,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // you can store user data to SharedPreference
             AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
             firebaseAuthWithGoogle(credential);*/
-        }else{
+        } else {
             // Google Sign In failed, update UI appropriately
-            Log.e(TAG, "Login Unsuccessful. "+result);
+            Log.e(TAG, "Login Unsuccessful. " + result);
             Toast.makeText(this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
         }
     }
@@ -207,11 +198,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         tvCreateAccount = findViewById(R.id.tv_createAnAccountLogin);
         etEmail = findViewById(R.id.et_emailLoginPage);
         etPassword = findViewById(R.id.et_passwordLoginPage);
-
+        builder = new AlertDialog.Builder(this);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
+    private void showLoadingAlert() {
+        View customView = LayoutInflater.from(LoginActivity.this).inflate(R.layout.alert_loading_view, null);
+        tvLoadingText = customView.findViewById(R.id.tv_loadingTextLoadingAlert);
+        tvLoadingText.setText("Logging in...");
+        lottieView = customView.findViewById(R.id.lottieViewLoadingAlert);
+        lottieView.setAnimation(R.raw.loading_bouncing);
+        lottieView.loop(true);
+        lottieView.playAnimation();
+        builder.setView(customView);
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 }

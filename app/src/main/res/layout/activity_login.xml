@@ -74,15 +74,6 @@
             </com.github.florent37.materialtextfield.MaterialTextField>
 
 
-            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-                android:id="@+id/btnLoading_login"
-                android:background="#df5a55"
-                android:text="Login"
-                android:fontFamily="@font/muli"
-                android:textColor="#fff"
-                android:layout_width="match_parent"
-                android:layout_height="56dp" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_login"
                 android:layout_width="match_parent"

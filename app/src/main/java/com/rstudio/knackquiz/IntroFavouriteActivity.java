@@ -40,7 +40,7 @@ public class IntroFavouriteActivity extends AppCompatActivity {
     private ImageButton btnNext;
     private ParentCategoryAdapter categoryAdapter;
     private static final String TAG = "IntroFavouriteActivity";
-    private ArrayList<Category> categories, parentCategories,favCats = new ArrayList<>();
+    private ArrayList<Category> categories, parentCategories, favCats = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,16 +95,13 @@ public class IntroFavouriteActivity extends AppCompatActivity {
                                 }
 
 
-                                CategoryHelper.initCategories(IntroFavouriteActivity.this,categories,parentCategories);
+                                CategoryHelper.initCategories(IntroFavouriteActivity.this, categories, parentCategories);
 
 
-                                categoryAdapter = new ParentCategoryAdapter(colors,parentCategories,IntroFavouriteActivity.this);
+                                categoryAdapter = new ParentCategoryAdapter(colors, parentCategories, IntroFavouriteActivity.this);
                                 RecyclerView recyclerView = findViewById(R.id.rView_introCategories);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                 recyclerView.setAdapter(categoryAdapter);
-
-
-
 
 
                             } else {
@@ -127,7 +124,6 @@ public class IntroFavouriteActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
-
 
 
     private void initValues() {

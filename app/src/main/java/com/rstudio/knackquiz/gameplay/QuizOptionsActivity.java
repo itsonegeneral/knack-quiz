@@ -1,6 +1,7 @@
 package com.rstudio.knackquiz.gameplay;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +37,7 @@ import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.adapters.QuizOptionAdapter;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.helpers.DBClass;
+import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Player;
 import com.rstudio.knackquiz.models.QuizOption;
@@ -50,7 +55,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
     private QuizOptionAdapter quizOptionAdapter;
     private RecyclerView recyclerView;
     private ArrayList<QuizOption> quizOptions;
-    private TextView tvCoins;
+    private TextView tvCoins, tvDiamonds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            quizOptions.clear();
                             JSONObject jsonObject = new JSONObject(response);
                             Gson gson = new Gson();
                             if (jsonObject.getString("status").equalsIgnoreCase("success")) {
@@ -112,14 +118,29 @@ public class QuizOptionsActivity extends AppCompatActivity {
 
 
     private void loadCoins() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference ref;
+        Player tplr = DataStore.getCurrentPlayer(this);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
+        } else {
+            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_UNREGISTERED);
+        }
         ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    long coins = dataSnapshot.child("coins").getValue(Long.class);
+                    try {
+                        quizOptionAdapter.notifyDataSetChanged();
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
+                    DataStore.setCurrentPlayer(dataSnapshot.getValue(Player.class), QuizOptionsActivity.this);
 
+                    loadData();
+                    long coins = dataSnapshot.child("coins").getValue(Long.class);
+                    long diamonds = dataSnapshot.child("diamonds").getValue(Long.class);
                     tvCoins.setText(String.valueOf(coins));
+                    tvDiamonds.setText(String.valueOf(diamonds));
                 }
             }
 
@@ -128,6 +149,14 @@ public class QuizOptionsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void hideTb(View v) {
+        if (getSupportActionBar().isShowing()) {
+            getSupportActionBar().hide();
+        } else {
+            getSupportActionBar().show();
+        }
     }
 
     @Override
@@ -144,7 +173,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
         ImageView imgIcon = findViewById(R.id.imgBtn_tb_close);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
-
+        tvDiamonds = findViewById(R.id.tb_tvDiamondsMainCommon);
         imgIcon.setImageBitmap((Bitmap) getIntent().getParcelableExtra("bitmap"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         tv.setText(cat.getCategory() + " Challenges");

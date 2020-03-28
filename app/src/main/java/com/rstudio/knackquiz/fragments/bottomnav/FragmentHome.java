@@ -102,8 +102,8 @@ public class FragmentHome extends Fragment {
                                     trendingCats.add(category);
                                 }
 
-                                rViewTrending.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-                                categoryAdapter = new CategoryAdapter(context,trendingCats);
+                                rViewTrending.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                                categoryAdapter = new CategoryAdapter(context, trendingCats);
                                 rViewTrending.setAdapter(categoryAdapter);
 
                             } else {
@@ -122,7 +122,7 @@ public class FragmentHome extends Fragment {
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext().getApplicationContext());
         requestQueue.add(stringRequest);
     }
 

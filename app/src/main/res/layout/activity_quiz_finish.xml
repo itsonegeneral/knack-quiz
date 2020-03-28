@@ -21,15 +21,55 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/muli"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="You have won"
-                android:textColor="@color/colorTextLowEmphasise"
-                android:textSize="17sp" />
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="You have won"
+                    android:textColor="@color/colorTextLowEmphasise"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_prizeCoinsQuizFinishActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli"
+                    android:gravity="center"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:text="200"
+                    android:textColor="@color/colorTextLowEmphasise"
+                    android:textSize="17sp" />
+
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_price" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/muli"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Coins"
+                    android:textColor="@color/colorTextLowEmphasise"
+                    android:textSize="17sp" />
+
+
+            </LinearLayout>
+
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="wrap_content"

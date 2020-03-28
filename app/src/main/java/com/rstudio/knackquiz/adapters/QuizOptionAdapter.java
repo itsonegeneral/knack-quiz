@@ -2,6 +2,7 @@ package com.rstudio.knackquiz.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
+import com.firebase.client.Transaction;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rstudio.knackquiz.R;
+import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
+import com.rstudio.knackquiz.gameplay.QuizFinishActivity;
+import com.rstudio.knackquiz.models.Player;
 import com.rstudio.knackquiz.models.QuizOption;
 
 import java.util.ArrayList;
@@ -22,10 +31,12 @@ import java.util.ArrayList;
 public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.MyViewHolder> {
     private ArrayList<QuizOption> quizOptions;
     private Context mContext;
+    private Player player;
 
     public QuizOptionAdapter(Context context, ArrayList<QuizOption> quizOptions) {
         this.mContext = context;
         this.quizOptions = quizOptions;
+        this.player = DataStore.getCurrentPlayer(mContext);
     }
 
 
@@ -73,15 +84,59 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
             }
         });
 
+        if (Integer.parseInt(quizOption.getEntrycoins()) > player.getCoins()) {
+            holder.btnPlay.setText("Need " + String.valueOf(Integer.parseInt(quizOption.getEntrycoins()) - player.getCoins()) + " more coins");
+            holder.btnPlay.setEnabled(false);
+        }
+
         holder.btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, QuestionActivity.class);
                 intent.putExtra("options", quizOption);
+                reducePlayerCoins(quizOption.getEntrycoins());
                 mContext.startActivity(intent);
             }
         });
 
+    }
+
+    private void reducePlayerCoins(String sCoins){
+        int coins = Integer.parseInt(sCoins);
+        reduceCoins(coins);
+    }
+
+    public void reduceCoins(final int coins) {
+        String url;
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            url = "https://knack-quiz-b57d5.firebaseio.com/users/registered/" + DataStore.getCurrentPlayerID(mContext);
+        } else {
+            url = "https://knack-quiz-b57d5.firebaseio.com/users/unregistered/" + DataStore.getCurrentPlayerID(mContext);
+        }
+
+        Firebase.setAndroidContext(mContext);
+        Firebase database = new Firebase(url);
+        database.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Player player = new Player();
+                if (mutableData.getValue() != null) {
+                    player = mutableData.getValue(Player.class);
+                    player.setCoins(player.getCoins() - coins);
+                }
+                mutableData.setValue(player);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(FirebaseError firebaseError, boolean b, com.firebase.client.DataSnapshot dataSnapshot) {
+                if (b) {
+                    Toast.makeText(mContext, "Transaction Complete", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+        });
     }
 
     @Override

@@ -29,6 +29,7 @@ import com.rstudio.knackquiz.gameplay.QuestionActivity;
 import com.rstudio.knackquiz.helpers.CircleProgressBar;
 import com.rstudio.knackquiz.helpers.DelayAnimator;
 import com.rstudio.knackquiz.models.Question;
+import com.rstudio.knackquiz.models.QuizOption;
 
 
 public class QuestionFragment extends Fragment {
@@ -48,17 +49,20 @@ public class QuestionFragment extends Fragment {
     private QuestionActivity questionActivity;
     private int questionNumber;
     boolean isCorrect = false;
+    private QuizOption quizOption;
     int i = 1;
 
     public QuestionFragment() {
 
     }
 
-    public QuestionFragment(Context context, Question question, int number) {
+    public QuestionFragment(Context context, Question question, int number, QuizOption quizOption) {
         this.context = context;
         this.question = question;
         this.questionActivity = (QuestionActivity) context;
         this.questionNumber = number;
+        this.quizOption = quizOption;
+        this.time = Integer.parseInt(quizOption.getGametime());
         Log.d(TAG, "QuestionFragment: " + number);
     }
 
@@ -176,7 +180,11 @@ public class QuestionFragment extends Fragment {
         cardOption2.setEnabled(false);
         cardOption3.setEnabled(false);
         cardOption4.setEnabled(false);
-        countDownTimer.cancel();
+        try {
+            countDownTimer.cancel();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -187,8 +195,8 @@ public class QuestionFragment extends Fragment {
                 new FadeOutAnimation(cardOption3).setDuration(500).animate();
                 new FadeOutAnimation(cardOption4).setDuration(500).animate();
 
-                questionActivity.showNextQuestion();
                 questionActivity.addGameActivity(question, isCorrect);
+                questionActivity.showNextQuestion();
 
             }
         }, 1300);

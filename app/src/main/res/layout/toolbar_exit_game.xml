@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+
     android:background="@color/colorPrimaryDark"
-    android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
     android:orientation="vertical"
-    app:elevation="0dp">
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+    app:elevation="0dp"
+    app:layout_scrollFlags="scroll|enterAlways">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgBtn_tb_close"
             style="?attr/selectableItemBackgroundBorderless"
             android:layout_width="30dp"
-            android:transitionName="@string/toolbar_transition"
             android:layout_height="30dp"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:transitionName="@string/toolbar_transition" />
 
         <TextView
             android:id="@+id/tv_toolbarHeadingSimple"
@@ -30,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
+            android:ellipsize="marquee"
             android:text="Knack Quiz"
             android:textColor="@color/colorTextOffWhite"
             android:textSize="17sp" />
@@ -39,8 +44,6 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1" />
-
-        <include layout="@layout/header_coin_layout" />
 
 
     </LinearLayout>

@@ -62,6 +62,7 @@ public class QuestionActivity extends AppCompatActivity {
     private Player player;
     private QuizOption quizOption;
     private Activity questionActivty;
+    private int coins = 0;
     private GameSession gameSession;
 
     @Override
@@ -155,17 +156,22 @@ public class QuestionActivity extends AppCompatActivity {
             finish();
             Intent intent = new Intent(getApplicationContext(), QuizFinishActivity.class);
             intent.putExtra("result", gameSession.getCorrectAnswers());
+            intent.putExtra("coins",coins);
             startActivity(intent);
             //Show final result
         }
     }
 
     public void addGameActivity(Question question, boolean isCorrect) {
+        if (isCorrect) {
+            coins += Integer.parseInt(quizOption.getRewardcoins()) / Integer.parseInt(quizOption.getQuestionsize());
+            Toast.makeText(questionActivty, coins + "", Toast.LENGTH_SHORT).show();
+        }
         gameSession.addQuestionActivity(question, isCorrect);
     }
 
     private void showFragment(int i) {
-        QuestionFragment questionFragment = new QuestionFragment(questionActivty, questions.get(i), i + 1);
+        QuestionFragment questionFragment = new QuestionFragment(questionActivty, questions.get(i), i + 1, quizOption);
         FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
         //   fr.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_in_right);
         try {
@@ -175,12 +181,10 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void startGamePlay() {
-        showFragment(index);
-    }
 
     private void getQuestions() {
         String url = DBClass.urlGetQuestions + "?category=" + quizOption.getCategoryName() + "&limit=" + quizOption.getQuestionsize();
+        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

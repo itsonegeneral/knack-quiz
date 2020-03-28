@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.animation.LPaint;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,7 +63,7 @@ import devlight.io.library.ntb.NavigationTabBar;
 public class HomeActivity extends AppCompatActivity {
 
 
-    private TextView tvCoins, tvUserName;
+    private TextView tvCoins, tvUserName,tvDiamonds;
     private Player player;
     private static final String TAG = "HomeActivity";
     private CircleImageView imgProfileToolbar;
@@ -74,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         MultiDex.install(this);
         CategoryHelper.init(this);
+        FirebaseApp.initializeApp(this);
         checkFirstTime();
 
 
@@ -231,6 +233,8 @@ public class HomeActivity extends AppCompatActivity {
                         Picasso.get().load(player.getPhotoURL()).into(imgProfileToolbar);
                     }
                     tvCoins.setText(String.valueOf(player.getCoins()));
+                    tvDiamonds.setText(String.valueOf(player.getDiamonds()));
+
                 }
             }
 
@@ -247,6 +251,8 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         tvUserName = findViewById(R.id.tb_tvusernameMainCommmon);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
+        tvDiamonds= findViewById(R.id.tb_tvDiamondsMainCommon);
+
         imgProfileToolbar = findViewById(R.id.img_toolbarProfile);
     }
 

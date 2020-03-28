@@ -94,7 +94,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                 HomeActivity activity = (HomeActivity) context;
                 ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.imgIcon, context.getString(R.string.toolbar_transition));
                 Intent intent = new Intent(context, QuizOptionsActivity.class);
-                intent.putExtra("cat", category.getCategory());
+                intent.putExtra("cat", category);
                 intent.putExtra("bitmap",bitmap);
                 context.startActivity(intent, activityOptionsCompat.toBundle());
             }

@@ -33,6 +33,7 @@ import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.adapters.QuizOptionAdapter;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.helpers.DBClass;
+import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Player;
 import com.rstudio.knackquiz.models.QuizOption;
 
@@ -45,7 +46,7 @@ import java.util.ArrayList;
 public class QuizOptionsActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizOptionsActivity";
-    private String cat;
+    private Category cat;
     private QuizOptionAdapter quizOptionAdapter;
     private RecyclerView recyclerView;
     private ArrayList<QuizOption> quizOptions;
@@ -61,11 +62,10 @@ public class QuizOptionsActivity extends AppCompatActivity {
         loadCoins();
 
 
-
     }
 
     private void loadData() {
-        String url = DBClass.urlGetQuizOptions + "?category=" + cat;
+        String url = DBClass.urlGetQuizOptions + "?id=" + cat.getId();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -104,12 +104,11 @@ public class QuizOptionsActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        cat = getIntent().getStringExtra("cat");
+        cat = (Category) getIntent().getSerializableExtra("cat");
         quizOptions = new ArrayList<>();
         recyclerView = findViewById(R.id.rView_quizOptions);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
-
 
 
     private void loadCoins() {
@@ -134,7 +133,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         finish();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         return super.onOptionsItemSelected(item);
     }
 
@@ -148,7 +147,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
 
         imgIcon.setImageBitmap((Bitmap) getIntent().getParcelableExtra("bitmap"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tv.setText(cat + " Challenges");
+        tv.setText(cat.getCategory() + " Challenges");
     }
 
 }

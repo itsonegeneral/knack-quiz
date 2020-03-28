@@ -66,6 +66,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+
                     <TextView
                         android:id="@+id/tv_userNameProfileFragment"
                         android:layout_width="match_parent"
@@ -73,67 +74,40 @@
                         android:fontFamily="@font/muli"
                         android:padding="10dp"
                         android:text="Rithik Sabhal"
+                        android:layout_marginTop="10dp"
                         android:textColor="@color/colorTextHighEmphasise"
                         android:textSize="17sp" />
 
 
-                    <ProgressBar
-                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="7dp"
-                        android:layout_margin="3dp"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginEnd="13dp"
-                        android:indeterminate="false"
-                        android:max="100"
-                        android:min="0"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:progress="70"
-                        android:progressDrawable="@drawable/gradient_progress_bar" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="3dp"
-                        android:paddingEnd="3dp"
-                        android:orientation="horizontal">
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:gravity="center_vertical"
+                     android:paddingStart="10dp"
+                     android:paddingEnd="10dp"
+                     android:orientation="horizontal"
+                     android:layout_height="wrap_content">
 
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/muli"
-                            android:paddingStart="8dp"
+                     <ImageView
+                         android:layout_width="30dp"
+                         android:src="@drawable/ic_level_guard"
+                         android:layout_height="30dp"/>
 
-                            android:text="291"
-                            android:textColor="@color/colorTextLowEmphasise"
-                            android:textSize="16sp" />
+                     <TextView
+                         android:gravity="top"
+                         android:id="@+id/tv_userLevelPosProfileFragment"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:fontFamily="@font/muli"
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/muli"
-                            android:paddingStart="10dp"
-
-                            android:text="Level"
-                            android:textColor="@color/colorTextLowEmphasise"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/muli"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="4dp"
-                            android:text="291"
-                            android:textColor="@color/colorTextLowEmphasise"
-                            android:textSize="16sp" />
+                         android:text="Soldier"
+                         android:textColor="@color/colorTextLowEmphasise"
+                         android:textSize="16sp" />
 
 
-                    </LinearLayout>
+                 </LinearLayout>
+
+
 
                 </LinearLayout>
 
@@ -171,10 +145,11 @@
                     android:textColor="@color/colorTextLowEmphasise" />
 
                 <TextView
+                    android:id="@+id/tv_emailProfilFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/muli"
-                    android:text="srithik1999@gmail.com"
+                    android:text=""
                     android:textColor="@color/colorTextHighEmphasise"
                     android:textSize="16sp" />
 
@@ -214,6 +189,143 @@
 
             </LinearLayout>
 
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/colorCardPrimaryDark"
+            app:contentPadding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Gamplay"
+                    android:padding="10dp"
+                    android:fontFamily="@font/muli"
+                    android:textColor="@color/colorTextLowEmphasise"
+                    android:layout_height="wrap_content"/>
+
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_margin="3dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginEnd="13dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:min="0"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:progress="70"
+                    android:progressDrawable="@drawable/gradient_progress_bar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="3dp"
+                    android:paddingEnd="3dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/muli"
+                        android:paddingStart="8dp"
+
+                        android:text="291"
+                        android:textColor="@color/colorTextLowEmphasise"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/muli"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+
+                        android:text="Level"
+                        android:textColor="@color/colorTextLowEmphasise"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/muli"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:text="291"
+                        android:textColor="@color/colorTextLowEmphasise"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardElevation="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="View Statistics"
+                        android:padding="10dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/colorTextHighEmphasise"
+
+                        android:layout_height="wrap_content"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardElevation="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="Rewards"
+                        android:padding="10dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/colorTextHighEmphasise"
+
+                        android:layout_height="wrap_content"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardElevation="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="Support"
+                        android:padding="10dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/muli"
+                        android:textColor="@color/colorTextHighEmphasise"
+
+                        android:layout_height="wrap_content"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 

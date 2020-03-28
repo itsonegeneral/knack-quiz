@@ -27,6 +27,7 @@ import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
 import com.rstudio.knackquiz.models.Player;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,7 +42,7 @@ public class FragmentProfile extends Fragment {
     private FirebaseAuth mAuth;
     private LinearLayout llLoggedInLayout;
     private CircleImageView imgProfile;
-    private TextView tvUserName;
+    private TextView tvUserName,tvEmail;
     private Player player;
 
     public FragmentProfile() {
@@ -64,7 +65,7 @@ public class FragmentProfile extends Fragment {
         }
 
         initValues();
-        getPlayerData();
+
 
 
         btSignin.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +89,8 @@ public class FragmentProfile extends Fragment {
 
         imgProfile = layout.findViewById(R.id.img_profileFragment);
         tvUserName = layout.findViewById(R.id.tv_userNameProfileFragment);
+        tvEmail = layout.findViewById(R.id.tv_emailProfilFragment);
+
 
 
         if (mAuth.getCurrentUser() == null) {
@@ -95,6 +98,7 @@ public class FragmentProfile extends Fragment {
             llLoggedInLayout.setVisibility(View.GONE);
         } else {
          //   tvUserName.setText(mAuth.getCurrentUser().getEmail());
+            getPlayerData();
             llSignInLayout.setVisibility(View.GONE);
             llLoggedInLayout.setVisibility(View.VISIBLE);
         }
@@ -103,6 +107,11 @@ public class FragmentProfile extends Fragment {
 
     private void getPlayerData(){
         player = DataStore.getCurrentPlayer(context);
+        tvEmail.setText(player.getEmailID());
+        tvUserName.setText(player.getUserName());
+        if(!player.getPhotoURL().isEmpty()){
+            Picasso.get().load(player.getPhotoURL()).into(imgProfile);
+        }
 
     }
 

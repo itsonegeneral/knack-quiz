@@ -6,72 +6,72 @@
     android:orientation="vertical">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginEnd="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_toolbarProfile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_account"
+                android:transitionName="imagetransition" />
 
             <LinearLayout
-                android:padding="5dp"
                 android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginEnd="5dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tb_tvusernameMainCommmon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="@font/muli"
+                    android:maxLines="1"
+                    android:text="Guest_3312341"
+                    android:textColor="#fff"
+                    android:textSize="17sp" />
 
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="5dp"
-                    android:id="@+id/img_toolbarProfile"
-                    android:transitionName="imagetransition"
-                    android:layout_width="30dp"
-                    android:src="@drawable/ic_account" />
-
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_height="wrap_content">
-
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:text="Guest_3312341"
-                       android:layout_marginStart="3dp"
-                       android:textSize="17sp"
-                       android:maxLines="1"
-                       android:fontFamily="@font/muli"
-                       android:id="@+id/tb_tvusernameMainCommmon"
-                       android:textColor="#fff"
-                       android:layout_height="wrap_content"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:text="Level 23"
-                       android:layout_marginStart="3dp"
-                       android:fontFamily="@font/muli"
-                       android:maxLines="1"
-                       android:id="@+id/tb_tvLevelMainCommmon"
-                       android:textColor="@color/colorTextLowEmphasise"
-                       android:layout_height="wrap_content"/>
-
-               </LinearLayout>
+                <TextView
+                    android:id="@+id/tb_tvLevelMainCommmon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="@font/muli"
+                    android:maxLines="1"
+                    android:text="Level 23"
+                    android:textColor="@color/colorTextLowEmphasise" />
 
             </LinearLayout>
 
-
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="1dp"/>
-
-
-            <include layout="@layout/header_coin_layout"/>
-
-
         </LinearLayout>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+
+        <include layout="@layout/header_coin_layout" />
+        <include layout="@layout/header_diamond_layout"/>
+
+
+    </LinearLayout>
 </com.google.android.material.appbar.MaterialToolbar>

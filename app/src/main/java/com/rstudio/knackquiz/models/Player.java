@@ -11,6 +11,7 @@ public class Player implements Serializable {
     private long levelPoint;
     private String signInType;
     private long coins;
+    private long diamonds;
 
 
 
@@ -25,6 +26,14 @@ public class Player implements Serializable {
         return userName;
     }
 
+
+    public long getDiamonds() {
+        return diamonds;
+    }
+
+    public void setDiamonds(long diamonds) {
+        this.diamonds = diamonds;
+    }
 
     public long getLevelPoint() {
         return levelPoint;

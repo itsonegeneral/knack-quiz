@@ -83,7 +83,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
 
         GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
-        PushDownAnim.setPushDownAnimTo(holder.relativeLayout);
+        PushDownAnim.setPushDownAnimTo(holder.relativeLayout).setScale(.93f);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

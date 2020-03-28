@@ -66,7 +66,6 @@ public class QuizOptionsActivity extends AppCompatActivity {
         loadData();
         loadCoins();
 
-
     }
 
     private void loadData() {

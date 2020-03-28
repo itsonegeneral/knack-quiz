@@ -228,6 +228,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     player = dataSnapshot.getValue(Player.class);
+                    DataStore.setCurrentPlayer(player,HomeActivity.this);
                     tvUserName.setText(player.getUserName());
                     if(player.getPhotoURL()!=null){
                         Picasso.get().load(player.getPhotoURL()).into(imgProfileToolbar);

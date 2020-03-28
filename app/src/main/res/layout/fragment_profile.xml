@@ -71,42 +71,40 @@
                         android:id="@+id/tv_userNameProfileFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/muli"
                         android:padding="10dp"
                         android:text="Rithik Sabhal"
-                        android:layout_marginTop="10dp"
                         android:textColor="@color/colorTextHighEmphasise"
                         android:textSize="17sp" />
 
 
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:gravity="center_vertical"
-                     android:paddingStart="10dp"
-                     android:paddingEnd="10dp"
-                     android:orientation="horizontal"
-                     android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
 
 
-                     <ImageView
-                         android:layout_width="30dp"
-                         android:src="@drawable/ic_level_guard"
-                         android:layout_height="30dp"/>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_level_guard" />
 
-                     <TextView
-                         android:gravity="top"
-                         android:id="@+id/tv_userLevelPosProfileFragment"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:fontFamily="@font/muli"
+                        <TextView
+                            android:id="@+id/tv_userLevelPosProfileFragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/muli"
+                            android:gravity="top"
+                            android:text="Soldier"
+                            android:textColor="@color/colorTextLowEmphasise"
+                            android:textSize="16sp" />
 
-                         android:text="Soldier"
-                         android:textColor="@color/colorTextLowEmphasise"
-                         android:textSize="16sp" />
 
-
-                 </LinearLayout>
-
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -163,6 +161,7 @@
                     android:textColor="@color/colorTextLowEmphasise" />
 
                 <TextView
+                    android:id="@+id/tv_phoneProfilFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/muli"
@@ -179,6 +178,7 @@
                     android:textColor="@color/colorTextLowEmphasise" />
 
                 <TextView
+                    android:id="@+id/tv_dobProfilFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/muli"
@@ -206,17 +206,18 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="Gamplay"
-                    android:padding="10dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/muli"
-                    android:textColor="@color/colorTextLowEmphasise"
-                    android:layout_height="wrap_content"/>
+                    android:padding="10dp"
+                    android:text="Gamplay"
+                    android:textColor="@color/colorTextLowEmphasise" />
 
                 <ProgressBar
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="7dp"
                     android:layout_margin="3dp"
+                    android:id="@+id/pgBar_levelProfileFragment"
                     android:layout_marginStart="13dp"
                     android:layout_marginEnd="13dp"
                     android:indeterminate="false"
@@ -236,11 +237,11 @@
 
 
                     <TextView
+                        android:id="@+id/tv_startLevelProfilFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
                         android:paddingStart="8dp"
-
                         android:text="291"
                         android:textColor="@color/colorTextLowEmphasise"
                         android:textSize="16sp" />
@@ -258,6 +259,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tv_endProfilFragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
@@ -270,58 +272,58 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
-                    app:cardElevation="1dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
-                    android:layout_height="wrap_content">
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardElevation="1dp">
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/muli"
+                        android:padding="10dp"
                         android:text="View Statistics"
-                        android:padding="10dp"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/muli"
                         android:textColor="@color/colorTextHighEmphasise"
 
-                        android:layout_height="wrap_content"/>
+                        android:textSize="16sp" />
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
-                    app:cardElevation="1dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
-                    android:layout_height="wrap_content">
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardElevation="1dp">
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/muli"
+                        android:padding="10dp"
                         android:text="Rewards"
-                        android:padding="10dp"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/muli"
                         android:textColor="@color/colorTextHighEmphasise"
 
-                        android:layout_height="wrap_content"/>
+                        android:textSize="16sp" />
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
-                    app:cardElevation="1dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
-                    android:layout_height="wrap_content">
+                    app:cardBackgroundColor="@color/colorCardPrimaryDark"
+                    app:cardElevation="1dp">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:text="Support"
-                        android:padding="10dp"
-                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
+                        android:padding="10dp"
+                        android:text="Support"
                         android:textColor="@color/colorTextHighEmphasise"
 
-                        android:layout_height="wrap_content"/>
+                        android:textSize="16sp" />
 
                 </androidx.cardview.widget.CardView>
 

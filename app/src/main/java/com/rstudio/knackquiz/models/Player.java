@@ -12,6 +12,7 @@ public class Player implements Serializable {
     private String signInType;
     private long coins;
     private long diamonds;
+    private String phone,dob;
 
 
 
@@ -21,6 +22,22 @@ public class Player implements Serializable {
         coins = 0;
     }
 
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUserName() {
         return userName;
@@ -62,6 +79,7 @@ public class Player implements Serializable {
     public void setCoins(long coins) {
         this.coins = coins;
     }
+
 
     public String getPlayerID() {
         return playerID;

@@ -184,7 +184,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void getQuestions() {
         String url = DBClass.urlGetQuestions + "?category=" + quizOption.getCategoryName() + "&limit=" + quizOption.getQuestionsize();
-        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

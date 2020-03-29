@@ -157,6 +157,7 @@ public class QuestionActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), QuizFinishActivity.class);
             intent.putExtra("result", gameSession.getCorrectAnswers());
             intent.putExtra("coins",coins);
+            intent.putExtra("option",quizOption);
             startActivity(intent);
             //Show final result
         }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class QuizOption implements Serializable {
 
     private String id, title, catid, rewardcoins, description, entrycoins, gametime, questionsize, difficulty;
-    private String categoryName,parentCategory,iconLink,type;
+    private String categoryName,parentCategory,iconLink,type,rewardType,entryType;
 
     public QuizOption() {
     }
@@ -16,6 +16,22 @@ public class QuizOption implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRewardType() {
+        return rewardType;
+    }
+
+    public void setRewardType(String rewardType) {
+        this.rewardType = rewardType;
+    }
+
+    public String getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(String entryType) {
+        this.entryType = entryType;
     }
 
     public String getTitle() {

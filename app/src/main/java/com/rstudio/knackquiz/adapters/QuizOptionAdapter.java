@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
         TextView tvTitle, tvDescription, tvRewardCoins, tvEntryCoins;
         MaterialCardView cardView, cardCoins;
         MaterialButton btnPlay;
+        ImageView imgRewardIcon, imgEntryIcon;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +58,8 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
             //cardCoins = itemView.findViewById(R.id.card_quizOptionCoins);
             cardView = itemView.findViewById(R.id.card_quizOptionItem);
             btnPlay = itemView.findViewById(R.id.btn_playQuizOptionList);
+            imgRewardIcon = itemView.findViewById(R.id.img_icRewardQuizOptionlist);
+
 
         }
     }
@@ -77,6 +81,12 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
         holder.tvEntryCoins.setText(quizOption.getEntrycoins());
 
 
+        if (quizOption.getRewardType().equalsIgnoreCase("diamond")) { //change reward icon to diamond if diamond reward
+            holder.imgRewardIcon.setBackground(mContext.getResources().getDrawable(R.drawable.ic_diamond)); //Diamond match
+        }else{
+            //coin match
+        }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +94,7 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
             }
         });
 
-        if (Integer.parseInt(quizOption.getEntrycoins()) > player.getCoins()) {
+        if (Integer.parseInt(quizOption.getEntrycoins()) > player.getCoins()) { //check if player has enough coins to enter the match
             holder.btnPlay.setText("Need " + String.valueOf(Integer.parseInt(quizOption.getEntrycoins()) - player.getCoins()) + " more coins");
             holder.btnPlay.setEnabled(false);
         }
@@ -101,7 +111,7 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
 
     }
 
-    private void reducePlayerCoins(String sCoins){
+    private void reducePlayerCoins(String sCoins) {
         int coins = Integer.parseInt(sCoins);
         reduceCoins(coins);
     }

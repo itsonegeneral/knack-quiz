@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
      }
 
     private void getPlayerData(final Player player) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS);
         ref.child(player.getPlayerID()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -185,7 +185,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
     private void uploadPlayerData(final Player player) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
+        player.setPlayerRegisterType(DBKeys.KEY_REGISTERED);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS);
         ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

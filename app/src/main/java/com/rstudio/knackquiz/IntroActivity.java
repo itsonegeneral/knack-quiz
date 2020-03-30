@@ -61,30 +61,29 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(IntroActivity.this,IntroFavouriteActivity.class));
+                startActivity(new Intent(IntroActivity.this, IntroFavouriteActivity.class));
             }
         });
 
 
-
-
         //Assign a new id to user
-        String userID = UUID.randomUUID().toString().replace("-","");
+        String userID = UUID.randomUUID().toString().replace("-", "");
         Player player = new Player();
         player.setPlayerID(userID);
         player.setPlayerRegisterType(KeyStore.UNREGISTERED_USER);
-        DataStore.setCurrentPlayer(player,this);
+        player.setDiamonds(0);
+        player.setCoins(0);
+        player.setUserName("Guest Player");
+        DataStore.setCurrentPlayer(player, this);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("unregistered");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.child(userID).setValue(player);
 
 
-
-        SharedPreferences sharedPreferences = getSharedPreferences(DataStore.FIRSTTIME,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(DataStore.FIRSTTIME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(DataStore.STATUS,"NOT");
+        editor.putString(DataStore.STATUS, "NOT");
         editor.apply();
-
 
 
     }

@@ -215,13 +215,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        DatabaseReference ref;
-        Player tplr = DataStore.getCurrentPlayer(this);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
-        } else {
-            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_UNREGISTERED);
-        }
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS);
+
 
         ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
             @Override
@@ -245,6 +240,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
 
     private void setToolbar() {
         MaterialToolbar toolbar = findViewById(R.id.tb_activityHome);

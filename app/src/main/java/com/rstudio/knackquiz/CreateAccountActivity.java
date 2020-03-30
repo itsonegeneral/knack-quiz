@@ -38,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.rstudio.knackquiz.datastore.DataStore;
+import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.models.Player;
 
 import java.util.regex.Pattern;
@@ -79,7 +80,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String username = etUserName.getText().toString();
         showLoadingAlert(); //First showing alert
         tvLoadingText.setText("Creating your account...");
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("registered");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.orderByChild("userName").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -159,6 +160,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     player.setEmailID(email);
                     player.setUserName(etUserName.getText().toString());
                     player.setPlayerID(mAuth.getUid());
+                    player.setPlayerRegisterType(DBKeys.KEY_REGISTERED);
 
                     uploadPlayerData(player);
 
@@ -183,7 +185,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private void uploadPlayerData(final Player player) {
         updateLoadingAlertText("Setting up your account...");
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child("registered");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
         ref.child(player.getPlayerID()).setValue(player).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

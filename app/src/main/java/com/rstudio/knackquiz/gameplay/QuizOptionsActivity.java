@@ -117,27 +117,22 @@ public class QuizOptionsActivity extends AppCompatActivity {
 
 
     private void loadCoins() {
-        DatabaseReference ref;
-        Player tplr = DataStore.getCurrentPlayer(this);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
-        } else {
-            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_UNREGISTERED);
-        }
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS);
         ref.child(DataStore.getCurrentPlayerID(this)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     try {
                         quizOptionAdapter.notifyDataSetChanged();
-                    }catch (NullPointerException e){
+                    } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
                     DataStore.setCurrentPlayer(dataSnapshot.getValue(Player.class), QuizOptionsActivity.this);
 
                     loadData();
-                    long coins = dataSnapshot.child("coins").getValue(Long.class);
-                    long diamonds = dataSnapshot.child("diamonds").getValue(Long.class);
+                    Player player = dataSnapshot.getValue(Player.class);
+                    long coins = player.getCoins();
+                    long diamonds = player.getDiamonds();
                     tvCoins.setText(String.valueOf(coins));
                     tvDiamonds.setText(String.valueOf(diamonds));
                 }

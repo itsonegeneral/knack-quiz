@@ -191,4 +191,18 @@ public class FragmentProfile extends Fragment {
         tvPhone.setText(player.getPhone());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mAuth.getCurrentUser() == null) {
+            llSignInLayout.setVisibility(View.VISIBLE);
+            llLoggedInLayout.setVisibility(View.GONE);
+        } else {
+            //   tvUserName.setText(mAuth.getCurrentUser().getEmail());
+            getPlayerData();
+            llSignInLayout.setVisibility(View.GONE);
+            llLoggedInLayout.setVisibility(View.VISIBLE);
+        }
+    }
 }

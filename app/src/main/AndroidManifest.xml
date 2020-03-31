@@ -14,10 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateAccountActivity"></activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
+        <activity android:name=".gameplay.contests.CreateContestActivity"></activity>
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".gameplay.QuizOptionsActivity" />
         <activity android:name=".gameplay.QuizFinishActivity" />
         <activity android:name=".gameplay.QuestionActivity" />

@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.adapters.ViewPagerAdapter;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
+import com.rstudio.knackquiz.gameplay.contests.AllContestsFragment;
 import com.rstudio.knackquiz.gameplay.contests.MyContestFragment;
 
 public class FragmentContest extends Fragment {
@@ -34,7 +35,7 @@ public class FragmentContest extends Fragment {
     public FragmentContest(Context context) {
         this.context = context;
     }
-
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class FragmentContest extends Fragment {
         TabLayout tabLayout = layout.findViewById(R.id.tabLayout_contestFrag);
         ViewPager viewPager = layout.findViewById(R.id.viewPager_contestFrag);
 
-        viewPagerAdapter.addFrag(new MyContestFragment(context), "Contests");
+        viewPagerAdapter.addFrag(new AllContestsFragment(context), "Contests");
         viewPagerAdapter.addFrag(new MyContestFragment(context), "My Contests");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

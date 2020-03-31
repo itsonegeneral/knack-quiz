@@ -1,13 +1,11 @@
 package com.rstudio.knackquiz.gameplay.contests;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,22 +27,22 @@ import com.rstudio.knackquiz.models.Contest;
 
 import java.util.ArrayList;
 
-public class MyContestFragment extends Fragment {
+public class AllContestsFragment extends Fragment {
 
     private Context context;
     private ArrayList<Contest> contestsList;
     private RelativeLayout layout;
     private ContestAdapter contestAdapter;
     private RecyclerView recyclerView;
-    private FloatingActionButton fabAddContest;
 
-    public MyContestFragment() {
+
+    public AllContestsFragment() {
         if (context == null) {
             this.context = getContext();
         }
     }
 
-    public MyContestFragment(Context context) {
+    public AllContestsFragment(Context context) {
         this.context = context;
     }
 
@@ -91,16 +89,9 @@ public class MyContestFragment extends Fragment {
         contestsList = new ArrayList<>();
         recyclerView = layout.findViewById(R.id.rView_myContests);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        
-        
-        
-        //FAB
+
+        //Hide add contest
         ExtendedFloatingActionButton fab = layout.findViewById(R.id.fab_hostContest);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context,CreateContestActivity.class));
-            }
-        });
+        fab.setVisibility(View.GONE);
     }
 }

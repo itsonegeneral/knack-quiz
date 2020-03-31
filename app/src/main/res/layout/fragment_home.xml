@@ -49,6 +49,9 @@
                 android:layout_height="wrap_content" />
 
 
+
+            <include layout="@layout/list_view_contest"/>
+
         </LinearLayout>
 
     </ScrollView>

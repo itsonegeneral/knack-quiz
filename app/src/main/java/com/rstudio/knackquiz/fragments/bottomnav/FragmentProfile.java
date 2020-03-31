@@ -175,14 +175,7 @@ public class FragmentProfile extends Fragment {
     }
 
     private void updatePlayer() {
-
-        DatabaseReference ref;
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_REGISTERED);
-        } else {
-            ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS).child(DBKeys.KEY_UNREGISTERED);
-        }
-
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS);
         ref.child(player.getPlayerID()).setValue(player);
     }
 

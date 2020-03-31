@@ -204,8 +204,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void getExistingPlayerData(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS)
-                .child(DBKeys.KEY_REGISTERED);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_USERS);
         ref.child(mAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

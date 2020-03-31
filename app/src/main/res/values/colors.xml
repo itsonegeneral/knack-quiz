@@ -5,6 +5,12 @@
     <color name="colorTextLight">#9b92b3</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorTextOffWhite">#E9E9E9</color>
+
+
+    <color name="colorGreenBottomNav">#72d3b4</color>
+    <color name="colorYellowBottomNav">#f9bb72</color>
+    <color name="colorRedBottomNav">#df5a55</color>
+
     <color name="colorTextSecondaryDark">#DEDEDE</color>
     <color name="colorOptionCorrect">#7DCC80</color>
     <color name="colorOptionWrong">#df5a55</color>

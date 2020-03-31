@@ -36,12 +36,14 @@
                 android:textColor="@color/colorTextLowEmphasise" />
 
             <TextView
+                android:id="@+id/tv_dateContestList"
                 android:fontFamily="@font/muli_bold"
                 android:padding="3dp"
                 android:text="10/03/2020"
                 android:textColor="@color/colorTextHighEmphasise" />
 
             <TextView
+                android:id="@+id/tv_timeContestList"
                 android:layout_gravity="end"
                 android:fontFamily="@font/muli_bold"
                 android:padding="3dp"
@@ -75,6 +77,7 @@
                     android:textColor="@color/colorTextLowEmphasise" />
 
                 <TextView
+                    android:id="@+id/tv_categoryContestList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/muli"
@@ -121,6 +124,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_prizeContestList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
@@ -174,6 +178,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_entryContestList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
@@ -224,6 +229,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_questionTimeContestList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
@@ -273,6 +279,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_durationContestList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
@@ -290,7 +297,7 @@
 
 
         <ProgressBar
-            android:id="@+id/pgBar_levelProfileFragment"
+            android:id="@+id/pgBar_playersContestList"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="7dp"
@@ -315,6 +322,7 @@
 
 
             <TextView
+                android:id="@+id/tv_joinedPlayersContestList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
@@ -329,22 +337,23 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/tv_endProfilFragment"
+                android:id="@+id/tv_totalPlayersContestList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli"
                 android:paddingStart="10dp"
                 android:paddingEnd="4dp"
+
                 android:text="6 players"
                 android:textColor="@color/colorTextLowEmphasise" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/bt_joinContestList"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_button_round_yellow"
-
             android:backgroundTint="@color/colorYellowBottomNav"
             android:text="Join" />
 

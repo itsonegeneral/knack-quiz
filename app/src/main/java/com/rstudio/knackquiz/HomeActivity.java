@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
@@ -29,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.animation.LPaint;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -51,6 +53,7 @@ import com.rstudio.knackquiz.helpers.CategoryHelper;
 import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.helpers.KeyStore;
 import com.rstudio.knackquiz.models.Category;
+import com.rstudio.knackquiz.models.Contest;
 import com.rstudio.knackquiz.models.Player;
 import com.squareup.picasso.Picasso;
 
@@ -73,12 +76,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         MultiDex.install(this);
         CategoryHelper.init(this);
         FirebaseApp.initializeApp(this);
+
         checkFirstTime();
-
-
         initUI();
         setToolbar();
         loadData();

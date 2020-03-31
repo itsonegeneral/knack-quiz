@@ -85,7 +85,6 @@ public class FragmentProfile extends Fragment {
 
         initValues();
 
-
         btSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +126,6 @@ public class FragmentProfile extends Fragment {
             llLoggedInLayout.setVisibility(View.VISIBLE);
         }
     }
-
 
     private void getPlayerData() {
         player = DataStore.getCurrentPlayer(context);

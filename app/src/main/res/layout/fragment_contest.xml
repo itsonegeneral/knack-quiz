@@ -2,11 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="hsdyujahsduh"
-        android:layout_height="wrap_content"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout_contestFrag"
+        android:background="@color/colorPrimaryDark"
+        app:tabTextColor="@color/colorTextLight"
+        app:tabSelectedTextColor="#fff"
+        app:tabIndicatorColor="@color/colorTextLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager_contestFrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

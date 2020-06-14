@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameSession implements Serializable {
+
     private QuizOption quizOption;
     private String userId;
     private HashMap<Question, Boolean> sessionData = new HashMap<>();

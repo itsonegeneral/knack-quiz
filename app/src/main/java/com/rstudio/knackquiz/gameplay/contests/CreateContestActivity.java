@@ -97,7 +97,7 @@ public class CreateContestActivity extends AppCompatActivity {
                                           int minute) {
 
                         tvSelectedDate.setText(hourOfDay + ":" + minute);
-                        tvSelectedDate.setVisibility(View.VISIBLE);
+                        tvSelectedTime.setVisibility(View.VISIBLE);
                         btTime.setVisibility(View.GONE);
                     }
                 }, mHour, mMinute, false);

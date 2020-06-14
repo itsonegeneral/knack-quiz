@@ -3,6 +3,7 @@ package com.rstudio.knackquiz.models;
 import java.io.Serializable;
 
 public class Player implements Serializable {
+
     private String playerID;
     private String userName;
     private String emailID;
@@ -13,10 +14,6 @@ public class Player implements Serializable {
     private long coins;
     private long diamonds;
     private String phone,dob;
-
-
-
-
 
     public Player() {
         coins = 0;
@@ -40,6 +37,9 @@ public class Player implements Serializable {
     }
 
     public String getUserName() {
+        if(userName ==null){
+            userName = "guest";
+        }
         return userName;
     }
 

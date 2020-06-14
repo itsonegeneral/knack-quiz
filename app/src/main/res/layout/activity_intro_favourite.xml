@@ -25,17 +25,19 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="@font/muli"
             android:padding="10dp"
             android:text="Skip"
-            android:textColor="@color/colorTextLight" />
+            android:textColor="@color/colorTextLowEmphasise" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:fontFamily="@font/muli_bold"
             android:text="Pick some favourites"
-            android:textColor="#C5C5C5"
-            android:textSize="16sp" />
+            android:textColor="@color/colorTextHighEmphasise"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -44,16 +46,21 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
+        android:text="Continue"
         android:id="@+id/imgBtn_submitFavourites"
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="@color/colorTextHighEmphasise"
+        app:icon="@drawable/ic_navigate_next_white_24dp"
+        app:iconGravity="end"
+        app:iconTint="@color/colorTextHighEmphasise"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_navigate_next_white_24dp" />
+        android:focusable="true" />
 
 </RelativeLayout>

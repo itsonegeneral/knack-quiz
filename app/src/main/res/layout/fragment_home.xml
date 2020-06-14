@@ -50,7 +50,6 @@
 
 
 
-            <include layout="@layout/list_view_contest"/>
 
         </LinearLayout>
 

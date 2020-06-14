@@ -104,11 +104,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void googleSignIn() {
-
-
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(intent, RC_SIGN_IN);
-
     }
 
     @Override

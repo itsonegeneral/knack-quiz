@@ -2,46 +2,24 @@ package com.rstudio.knackquiz;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.multidex.MultiDex;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.DataSetObserver;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.service.autofill.Dataset;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.animation.LPaint;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rstudio.knackquiz.adapters.CategoryAdapter;
 import com.rstudio.knackquiz.adapters.ViewPagerAdapter;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentContest;
@@ -52,12 +30,9 @@ import com.rstudio.knackquiz.fragments.bottomnav.FragmentProfile;
 import com.rstudio.knackquiz.helpers.CategoryHelper;
 import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.helpers.KeyStore;
-import com.rstudio.knackquiz.models.Category;
-import com.rstudio.knackquiz.models.Contest;
 import com.rstudio.knackquiz.models.Player;
 import com.squareup.picasso.Picasso;
 
-import java.io.DataInputStream;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -81,21 +56,48 @@ public class HomeActivity extends AppCompatActivity {
         CategoryHelper.init(this);
         FirebaseApp.initializeApp(this);
 
-        checkFirstTime();
         initUI();
         setToolbar();
-        loadData();
+        
+        if(!checkFirstTime()){
+            loadData();
+        }
+
 
     }
 
+    private void setPlayerData() {
+        if(player.getPhotoURL()!=null){
+            Picasso.get().load(player.getPhotoURL()).into(imgProfileToolbar);
+        }
+        tvUserName.setText(player.getUserName());
+        tvCoins.setText(String.valueOf(player.getCoins()));
+        tvDiamonds.setText(String.valueOf(player.getDiamonds()));
+    }
 
-    private void checkFirstTime() {
+
+    private boolean checkFirstTime() {
         SharedPreferences sharedPreferences = getSharedPreferences(DataStore.FIRSTTIME, MODE_PRIVATE);
         String status = sharedPreferences.getString(DataStore.STATUS, "");
         if (status.isEmpty()) {
             finish();
             startActivity(new Intent(this, IntroActivity.class));
+            return true;
+        }else{
+            if(getIntent().hasExtra(KeyStore.PLAYER_SERIAL)){
+                player = (Player) getIntent().getSerializableExtra(KeyStore.PLAYER_SERIAL);
+                setPlayerData();
+            }else{
+                showLoadingActivity();
+            }
+            return false;
         }
+    }
+
+    private void showLoadingActivity() {
+        finish();
+        startActivity(new Intent(this,LaunchLoadingActivity.class));
+        overridePendingTransition(0,0);
     }
 
     private void initUI() {
@@ -227,13 +229,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     player = dataSnapshot.getValue(Player.class);
                     DataStore.setCurrentPlayer(player,HomeActivity.this);
-                    tvUserName.setText(player.getUserName());
-                    if(player.getPhotoURL()!=null){
-                        Picasso.get().load(player.getPhotoURL()).into(imgProfileToolbar);
-                    }
-                    tvCoins.setText(String.valueOf(player.getCoins()));
-                    tvDiamonds.setText(String.valueOf(player.getDiamonds()));
-
+                    setPlayerData();
                 }
             }
 
@@ -243,12 +239,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
 
 
     private void setToolbar() {

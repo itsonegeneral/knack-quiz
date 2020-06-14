@@ -3,6 +3,7 @@
     android:id="@+id/rl_categoryListHolder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorCardPrimaryLight"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -27,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cricket"
-            android:textColor="#000" />
+            android:fontFamily="@font/muli"
+            android:textColor="@color/colorTextHighEmphasise" />
 
         <ImageView
             android:id="@+id/img_tickCategoryList"

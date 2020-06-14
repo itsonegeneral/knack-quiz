@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Contest implements Serializable {
+
     private String id, title, startTime, endTime, entryType, rewardType, category, categoryId;
     private int entryValue, rewardValue, questionTime, totalPlayers, playerCount;
     private ArrayList<String> players = new ArrayList<>();

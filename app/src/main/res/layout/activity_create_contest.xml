@@ -93,10 +93,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/colorTextLowEmphasise"
-            android:text="* ideal timing is from 9AM to 11PM" />
-
+            android:text="* ideal timing is from 9AM to 11PM"
+            android:textColor="@color/colorTextLowEmphasise" />
 
 
     </LinearLayout>
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:text="Create Contest" />
+
 </RelativeLayout>

@@ -6,6 +6,5 @@ public class DBClass {
     public static final String urlGetQuestions = url +"getquestions";
     public static final String urlGetCategories = url + "getcategories";
     public static final String urlGetQuizOptions = url + "getquizoptions";
-
-
+    public static final String urlGetSubCategories = url + "getsubcategories";
 }

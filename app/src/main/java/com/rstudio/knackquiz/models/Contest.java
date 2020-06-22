@@ -3,17 +3,24 @@ package com.rstudio.knackquiz.models;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Contest implements Serializable {
 
-    private String id, title, startTime, endTime, entryType, rewardType, category, categoryId;
-    private int entryValue, rewardValue, questionTime, totalPlayers, playerCount;
+    private String id, title, startTime, endTime, entryType, rewardType, category, categoryId,hostUserId;
+    private int entryValue, rewardValue, questionTime, totalPlayers, winnerCount;
     private ArrayList<String> players = new ArrayList<>();
     private ArrayList<Question> questions = new ArrayList<>();
 
     public Contest() {
+    }
+
+    public String getHostUserId() {
+        return hostUserId;
+    }
+
+    public void setHostUserId(String hostUserId) {
+        this.hostUserId = hostUserId;
     }
 
     public String getId() {
@@ -24,26 +31,18 @@ public class Contest implements Serializable {
         this.id = id;
     }
 
-    public String getStartDate() {
-        Date date = new Date(startTime);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
-        return format.format(date);
-    }
-
-    public String getStartTime() {
-        Date date = new Date(startTime);
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
-        return format.format(date);
-    }
     /*
     public int getDuration(){
 
     }*/
 
-    public int getJoinedCount(){
+    public int getJoinedCount() {
         return players.size();
     }
 
+    public void addPlayer(String playerUserId){
+        this.players.add(playerUserId);
+    }
 
 
     public ArrayList<String> getPlayers() {
@@ -72,6 +71,10 @@ public class Contest implements Serializable {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public String getStartTime() {
+        return startTime;
     }
 
     public String getEndTime() {
@@ -146,11 +149,11 @@ public class Contest implements Serializable {
         this.totalPlayers = totalPlayers;
     }
 
-    public int getPlayerCount() {
-        return playerCount;
+    public int getWinnerCount() {
+        return winnerCount;
     }
 
-    public void setPlayerCount(int playerCount) {
-        this.playerCount = playerCount;
+    public void setWinnerCount(int winnerCount) {
+        this.winnerCount = winnerCount;
     }
 }

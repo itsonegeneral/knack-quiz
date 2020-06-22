@@ -5,13 +5,46 @@ import android.graphics.drawable.Drawable;
 import java.io.Serializable;
 
 public class Category implements Serializable {
-    private String categoryName,parentCategory,id,iconLink;
+    private String categoryName,parentCategory,id,iconLink,type;
     private boolean isSelected=false;
+    private int homeClicks,favClicks;
 
     public Category() {
 
     }
 
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public int getHomeClicks() {
+        return homeClicks;
+    }
+
+    public void setHomeClicks(int homeClicks) {
+        this.homeClicks = homeClicks;
+    }
+
+    public int getFavClicks() {
+        return favClicks;
+    }
+
+    public void setFavClicks(int favClicks) {
+        this.favClicks = favClicks;
+    }
 
     public String getCategory() {
         return categoryName;

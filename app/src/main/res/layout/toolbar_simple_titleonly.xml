@@ -31,6 +31,7 @@
             android:layout_marginStart="5dp"
             android:id="@+id/tv_toolbarHeadingSimple"
             android:text="Quiz Wiz"
+            android:fontFamily="@font/muli_bold"
             android:textColor="@color/colorTextOffWhite"
             android:textSize="17sp" />
 

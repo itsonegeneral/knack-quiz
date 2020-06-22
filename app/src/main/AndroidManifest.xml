@@ -16,7 +16,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".network.NoNetworkActivity"></activity>
         <activity android:name=".LaunchLoadingActivity" />
-        <activity android:name=".gameplay.contests.CreateContestActivity" />
+        <activity android:name=".gameplay.contests.CreateContestActivity" >
+
+        </activity>
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".gameplay.QuizOptionsActivity" />

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rstudio.knackquiz.R;
+import com.rstudio.knackquiz.helpers.DateHelper;
 import com.rstudio.knackquiz.models.Contest;
 
 import java.util.ArrayList;
@@ -65,16 +66,17 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Contest contest = contestsList.get(position);
 
-        holder.tvDate.setText(contest.getStartDate());
-        holder.tvTime.setText(contest.getStartTime());
+        holder.tvDate.setText(DateHelper.getStartDate(contest.getStartTime()));
+        holder.tvTime.setText(DateHelper.getStartTime(contest.getStartTime()));
         holder.tvCategory.setText(contest.getCategory());
-        holder.tvPrize.setText(contest.getRewardValue());
-        holder.tvEntry.setText(contest.getEntryValue());
-        holder.tvQuestionTime.setText(contest.getQuestionTime());
+        holder.tvPrize.setText(String.valueOf(contest.getRewardValue()));
+        holder.tvEntry.setText(String.valueOf(contest.getEntryValue()));
+        holder.tvQuestionTime.setText(String.valueOf(contest.getQuestionTime()));
         //holder.tvDuration.setText(contest.);
         holder.tvJoinedPlayers.setText(String.valueOf(contest.getJoinedCount()));
         holder.tvTotalPlayers.setText(String.valueOf(contest.getTotalPlayers()));
-
+        holder.pgBarPlayers.setProgress(contest.getJoinedCount());
+        holder.pgBarPlayers.setMax(contest.getTotalPlayers());
         holder.btJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

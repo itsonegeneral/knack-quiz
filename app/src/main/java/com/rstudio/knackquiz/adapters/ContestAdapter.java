@@ -13,7 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rstudio.knackquiz.R;
+import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.helpers.DateHelper;
 import com.rstudio.knackquiz.models.Contest;
 
@@ -63,7 +67,7 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         Contest contest = contestsList.get(position);
 
         holder.tvDate.setText(DateHelper.getStartDate(contest.getStartTime()));
@@ -73,17 +77,23 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.MyViewHo
         holder.tvEntry.setText(String.valueOf(contest.getEntryValue()));
         holder.tvQuestionTime.setText(String.valueOf(contest.getQuestionTime()));
         //holder.tvDuration.setText(contest.);
-        holder.tvJoinedPlayers.setText(String.valueOf(contest.getJoinedCount()));
-        holder.tvTotalPlayers.setText(String.valueOf(contest.getTotalPlayers()));
+        holder.tvJoinedPlayers.setText(contest.getJoinedCount() + " Players joined");
+        holder.tvTotalPlayers.setText(contest.getTotalPlayers() +" Players");
         holder.pgBarPlayers.setProgress(contest.getJoinedCount());
         holder.pgBarPlayers.setMax(contest.getTotalPlayers());
         holder.btJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
+                joinContest(position);
             }
         });
 
+    }
+
+    private void joinContest(int position) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("contests");
+        contestsList.get(position).addPlayer(DataStore.getCurrentPlayerID(context));
+        ref.child(contestsList.get(position).getId()).setValue(contestsList.get(position));
     }
 
     @Override

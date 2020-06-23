@@ -3,6 +3,7 @@ package com.rstudio.knackquiz.fragments.bottomnav;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.rstudio.knackquiz.gameplay.contests.MyContestFragment;
 
 public class FragmentContest extends Fragment {
 
+    private static final String TAG = "FragmentContest";
     private Context context;
     private LinearLayout layout;
     private MaterialButton btnPlay; //TODO remove this
@@ -35,13 +37,22 @@ public class FragmentContest extends Fragment {
     public FragmentContest(Context context) {
         this.context = context;
     }
-    
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = (LinearLayout) inflater.inflate(R.layout.fragment_contest, container, false);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
+        Log.d(TAG, "onCreateView: ");
+
+        return layout;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         TabLayout tabLayout = layout.findViewById(R.id.tabLayout_contestFrag);
         ViewPager viewPager = layout.findViewById(R.id.viewPager_contestFrag);
 
@@ -49,7 +60,5 @@ public class FragmentContest extends Fragment {
         viewPagerAdapter.addFrag(new MyContestFragment(context), "My Contests");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
-        return layout;
     }
 }

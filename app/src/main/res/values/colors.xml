@@ -20,4 +20,8 @@
     <color name="colorCardPrimaryLight">#ED4E4061</color>
     <color name="colorTextLowEmphasise">#99FFFFFF</color>
     <color name="colorTextDisabled">#61FFFFFF</color>
+
+
+    <color name="colorButtonBlueEnd">#4AAEE6</color>
+
 </resources>

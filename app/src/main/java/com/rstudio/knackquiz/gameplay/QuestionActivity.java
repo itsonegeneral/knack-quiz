@@ -137,7 +137,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onComplete(FirebaseError firebaseError, boolean b, com.firebase.client.DataSnapshot dataSnapshot) {
                 if (b) {
-                    Toast.makeText(QuestionActivity.this, "Transaction Complete", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(QuestionActivity.this, "Transaction Complete", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -166,7 +166,6 @@ public class QuestionActivity extends AppCompatActivity {
     public void addGameActivity(Question question, boolean isCorrect) {
         if (isCorrect) {
             coins += Integer.parseInt(quizOption.getRewardcoins()) / Integer.parseInt(quizOption.getQuestionsize());
-            Toast.makeText(questionActivty, coins + "", Toast.LENGTH_SHORT).show();
         }
         gameSession.addQuestionActivity(question, isCorrect);
     }
@@ -223,6 +222,8 @@ public class QuestionActivity extends AppCompatActivity {
     private void setToolbar() {
         MaterialToolbar toolbar = findViewById(R.id.tb_activityQuestion);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
+        TextView tv = findViewById(R.id.tv_toolbarHeadingSimple);
+        tv.setText(quizOption.getCategoryName()  +" Quiz");
         setSupportActionBar(toolbar);
         ImageView img = findViewById(R.id.imgBtn_tb_close);
         img.setBackground(getResources().getDrawable(R.drawable.ic_close_white_24dp));

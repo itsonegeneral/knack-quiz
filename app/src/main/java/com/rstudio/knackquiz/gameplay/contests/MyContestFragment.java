@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,7 +34,7 @@ public class MyContestFragment extends Fragment {
 
     private Context context;
     private ArrayList<Contest> contestsList;
-    private RelativeLayout layout;
+    private SwipeRefreshLayout layout;
     private ContestAdapter contestAdapter;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAddContest;
@@ -51,7 +52,7 @@ public class MyContestFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        layout = (RelativeLayout) inflater.inflate(R.layout.fragment_my_contest, container, false);
+        layout = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_my_contest, container, false);
 
         initValues();
         getData();
@@ -64,6 +65,8 @@ public class MyContestFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                layout.setRefreshing(false);
+                contestsList.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Contest contest = snapshot.getValue(Contest.class);
@@ -100,6 +103,18 @@ public class MyContestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context,CreateContestActivity.class));
+            }
+        });
+
+        setRefreshListeners();
+    }
+
+
+    private void setRefreshListeners() {
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
             }
         });
     }

@@ -115,7 +115,7 @@ public class CreateContestActivity extends AppCompatActivity {
         contest.setStartTime(date);
         contest.setEndTime(DateHelper.addHourToDate(contest.getStartTime(),durationPicker.getValue()));
         contest.setQuestionTime(10);
-        contest.addPlayer(FirebaseAuth.getInstance().getCurrentUser().getUid()!=null?"sdbabjsd":"kjshdkja");
+        contest.addPlayer(FirebaseAuth.getInstance().getCurrentUser().getUid()!=null?FirebaseAuth.getInstance().getCurrentUser().getUid():"kjshdkja");
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_CONTESTS);

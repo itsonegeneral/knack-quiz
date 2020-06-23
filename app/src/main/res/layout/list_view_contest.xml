@@ -348,14 +348,15 @@
                 android:textColor="@color/colorTextLowEmphasise" />
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bt_joinContestList"
             android:layout_width="140dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_button_round_yellow"
             android:backgroundTint="@color/colorYellowBottomNav"
-            android:text="Join" />
+            android:text="Join"
+            android:textColor="#fff" />
 
     </LinearLayout>
 

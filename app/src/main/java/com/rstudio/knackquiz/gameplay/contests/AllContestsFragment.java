@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,7 +33,7 @@ public class AllContestsFragment extends Fragment {
 
     private Context context;
     private ArrayList<Contest> contestsList;
-    private RelativeLayout layout;
+    private SwipeRefreshLayout layout;
     private ContestAdapter contestAdapter;
     private RecyclerView recyclerView;
 
@@ -50,12 +51,21 @@ public class AllContestsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        layout = (RelativeLayout) inflater.inflate(R.layout.fragment_my_contest, container, false);
+        return inflater.inflate(R.layout.fragment_my_contest, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        layout = (SwipeRefreshLayout) view;
         initValues();
         getData();
+    }
 
-        return layout;
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 
     private void getData() {
@@ -63,6 +73,8 @@ public class AllContestsFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                contestsList.clear();
+                layout.setRefreshing(false);
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Contest contest = snapshot.getValue(Contest.class);
@@ -94,5 +106,17 @@ public class AllContestsFragment extends Fragment {
         //Hide add contest
         ExtendedFloatingActionButton fab = layout.findViewById(R.id.fab_hostContest);
         fab.setVisibility(View.GONE);
+
+        setRefreshListeners();
+
+    }
+
+    private void setRefreshListeners() {
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
     }
 }

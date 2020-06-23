@@ -45,6 +45,8 @@
             android:layout_height="1dp"
             android:layout_weight="1" />
 
+        <include layout="@layout/header_coin_layout"/>
+
 
     </LinearLayout>
 

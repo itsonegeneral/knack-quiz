@@ -53,7 +53,9 @@ public class QuestionFragment extends Fragment {
     int i = 1;
 
     public QuestionFragment() {
-
+        if(context== null){
+            context = getContext();
+        }
     }
 
     public QuestionFragment(Context context, Question question, int number, QuizOption quizOption) {
@@ -146,7 +148,7 @@ public class QuestionFragment extends Fragment {
             cardOption.setVisibility(View.VISIBLE);
 
         } else {
-            Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Correct", Toast.LENGTH_SHORT).show();
             isCorrect = true;
         }
         if (question.getAnswer().equals(tvOption1.getText().toString())) {
@@ -222,7 +224,11 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onFinish() {
                 circleProgressBar.setProgress(0);
-                questionActivity.showNextQuestion();
+                try {
+                    questionActivity.showNextQuestion();
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
             }
         };
 

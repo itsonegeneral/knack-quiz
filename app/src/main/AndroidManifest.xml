@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name="androidx.multidex.MultiDexApplication"
@@ -14,11 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".network.NoNetworkActivity"></activity>
+        <activity android:name=".AlertActivity" android:theme="@style/Theme.Transparent"/>
+        <activity android:name=".SelectCategoryActivity"></activity>
+        <activity android:name=".RedeemActivity" />
+        <activity android:name=".network.NoNetworkActivity" />
         <activity android:name=".LaunchLoadingActivity" />
-        <activity android:name=".gameplay.contests.CreateContestActivity" >
-
-        </activity>
+        <activity android:name=".gameplay.contests.CreateContestActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".gameplay.QuizOptionsActivity" />
@@ -37,6 +39,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".services.OnlineManagerService"
+            android:stopWithTask="true" />
     </application>
 
 </manifest>

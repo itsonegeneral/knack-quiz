@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.rstudio.knackquiz.adapters.CategoryAdapter;
 import com.rstudio.knackquiz.adapters.ParentCategoryAdapter;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 public class IntroFavouriteActivity extends AppCompatActivity {
 
     private TextView tvSKip;
-    private ImageButton btnNext;
+    private MaterialButton btnNext;
     private ParentCategoryAdapter categoryAdapter;
     private static final String TAG = "IntroFavouriteActivity";
     private ArrayList<Category> categories, parentCategories, favCats = new ArrayList<>();

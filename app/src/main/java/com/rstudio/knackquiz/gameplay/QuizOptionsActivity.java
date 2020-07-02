@@ -86,7 +86,7 @@ public class QuizOptionsActivity extends AppCompatActivity {
                                     Log.d(TAG, "onResponse: " + data.getJSONObject(i).toString());
                                 }
 
-                                quizOptionAdapter = new QuizOptionAdapter(QuizOptionsActivity.this, quizOptions);
+                                quizOptionAdapter = new QuizOptionAdapter(QuizOptionsActivity.this, quizOptions, cat.getCategoryName());
                                 recyclerView.setAdapter(quizOptionAdapter);
                             } else {
                                 Toast.makeText(QuizOptionsActivity.this, "Server side error", Toast.LENGTH_SHORT).show();

@@ -183,6 +183,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
+
     private void uploadPlayerData(final Player player) {
         updateLoadingAlertText("Setting up your account...");
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");

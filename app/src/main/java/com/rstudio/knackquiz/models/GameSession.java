@@ -8,11 +8,21 @@ public class GameSession implements Serializable {
 
     private QuizOption quizOption;
     private String userId;
+    private String TYPE;
     private HashMap<Question, Boolean> sessionData = new HashMap<>();
+    public static final String TYPE_NORMAL = "normal", TYPE_MULTIPLAYER = "multiplayer", TYPE_CONTEST = "contest";
+
 
     public GameSession() {
     }
 
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
+    }
 
     public QuizOption getQuizOption() {
         return quizOption;

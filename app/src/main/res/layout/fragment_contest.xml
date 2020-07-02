@@ -1,23 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout_contestFrag"
-        android:background="@color/colorPrimaryDark"
-        app:tabTextColor="@color/colorTextLight"
-        app:tabSelectedTextColor="#fff"
-        app:tabIndicatorColor="@color/colorTextLight"
+
+    <LinearLayout
+        android:id="@+id/ll_loggedInContestsFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager_contestFrag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout_contestFrag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:tabIndicatorColor="@color/colorTextLight"
+            app:tabSelectedTextColor="#fff"
+            app:tabTextColor="@color/colorTextLight" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager_contestFrag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_contestsSignInLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_contests"
+            android:transitionName="imagetransition" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
+            android:text="Sign in to participate in contests and win exciting prizes"
+            android:textColor="@color/colorTextLight"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_signinFragContest"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
+            android:text="Sign in"
+            android:textColor="@color/colorNavBarGreen"
+            app:rippleColor="#92E4B7" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -25,6 +25,7 @@ import com.google.gson.internal.$Gson$Preconditions;
 import com.rstudio.knackquiz.HomeActivity;
 import com.rstudio.knackquiz.IntroFavouriteActivity;
 import com.rstudio.knackquiz.R;
+import com.rstudio.knackquiz.SelectCategoryActivity;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
 import com.rstudio.knackquiz.gameplay.QuizOptionsActivity;
 import com.rstudio.knackquiz.helpers.CategoryHelper;
@@ -40,10 +41,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     private Context context;
     private ArrayList<Category> categories;
     private static final String TAG = "CategoryAdapter";
+    private OnItemClickListener onItemClickListener;
 
     public CategoryAdapter(Context context, ArrayList<Category> categories) {
         this.context = context;
         this.categories = categories;
+    }
+
+    public interface OnItemClickListener {
+        public void OnItemClick(Category category);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        onItemClickListener = listener;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -52,13 +62,27 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         RelativeLayout relativeLayout;
         ImageView imgIcon, imgTick;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.tv_categoryNameList);
             imgIcon = itemView.findViewById(R.id.img_iconCategoryList);
             imgTick = itemView.findViewById(R.id.img_tickCategoryList);
             relativeLayout = itemView.findViewById(R.id.rl_categoryListHolder);
+
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        Category category = categories.get(getAdapterPosition());
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.OnItemClick(category);
+                        }
+                    }
+                }
+            });
+
         }
     }
 
@@ -71,7 +95,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_category_horizontal_view,
                 parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,onItemClickListener);
     }
 
     @Override
@@ -82,23 +106,29 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.tvName.setText(category.getCategory());
 
 
-        GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
+        try {
+            GlideToVectorYou.justLoadImage((Activity) context, Uri.parse(category.getIconLink()), holder.imgIcon);
+        }catch (ClassCastException e){
+        }
         PushDownAnim.setPushDownAnimTo(holder.relativeLayout).setScale(.93f);
+        if (context instanceof HomeActivity) {
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    Bitmap bitmap = getBitmapFromView(holder.imgIcon);
 
-                Bitmap bitmap = getBitmapFromView(holder.imgIcon);
+                    HomeActivity activity = (HomeActivity) context;
+                    ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.imgIcon, context.getString(R.string.toolbar_transition));
+                    Intent intent = new Intent(context, QuizOptionsActivity.class);
+                    intent.putExtra("cat", category);
+                    intent.putExtra("bitmap", bitmap);
+                    context.startActivity(intent, activityOptionsCompat.toBundle());
+                }
+            });
+        } else if (context instanceof SelectCategoryActivity) {
 
-                HomeActivity activity = (HomeActivity) context;
-                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.imgIcon, context.getString(R.string.toolbar_transition));
-                Intent intent = new Intent(context, QuizOptionsActivity.class);
-                intent.putExtra("cat", category);
-                intent.putExtra("bitmap",bitmap);
-                context.startActivity(intent, activityOptionsCompat.toBundle());
-            }
-        });
+        }
 
     }
 

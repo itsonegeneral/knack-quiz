@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context=".LoginActivity">
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_margin="16dp"
+        android:id="@+id/imgBtn_backLogin"
+        android:background="@drawable/ic_arrow_back_black_24dp"
+        android:layout_height="30dp"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         app:cardBackgroundColor="@color/colorCardPrimaryDark"
         app:contentPadding="20dp">
 
@@ -135,4 +140,5 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-</LinearLayout>
+
+</RelativeLayout>

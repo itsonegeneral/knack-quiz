@@ -33,11 +33,12 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
     private ArrayList<QuizOption> quizOptions;
     private Context mContext;
     private Player player;
-
-    public QuizOptionAdapter(Context context, ArrayList<QuizOption> quizOptions) {
+    private String category;
+    public QuizOptionAdapter(Context context, ArrayList<QuizOption> quizOptions,String category) {
         this.mContext = context;
         this.quizOptions = quizOptions;
         this.player = DataStore.getCurrentPlayer(mContext);
+        this.category = category;
     }
 
 
@@ -90,7 +91,6 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -104,6 +104,7 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.My
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, QuestionActivity.class);
                 intent.putExtra("options", quizOption);
+                intent.putExtra("category",category);
                 reducePlayerCoins(quizOption.getEntrycoins());
                 mContext.startActivity(intent);
             }

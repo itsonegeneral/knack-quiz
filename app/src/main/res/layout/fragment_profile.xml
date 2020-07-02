@@ -301,9 +301,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli"
                         android:padding="10dp"
-                        android:text="Rewards"
+                        android:text="Redeem Rewards"
                         android:textColor="@color/colorTextHighEmphasise"
-
+                        android:id="@+id/tv_redeemRewardsProfile"
                         android:textSize="16sp" />
 
                 </androidx.cardview.widget.CardView>

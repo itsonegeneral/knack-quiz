@@ -10,11 +10,20 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +37,16 @@ import com.rstudio.knackquiz.fragments.bottomnav.FragmentHome;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentLeaderboard;
 import com.rstudio.knackquiz.fragments.bottomnav.FragmentProfile;
 import com.rstudio.knackquiz.helpers.CategoryHelper;
+import com.rstudio.knackquiz.helpers.DBClass;
 import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.helpers.KeyStore;
 import com.rstudio.knackquiz.models.Player;
+import com.rstudio.knackquiz.services.OnlineManagerService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
@@ -41,7 +54,7 @@ import devlight.io.library.ntb.NavigationTabBar;
 public class HomeActivity extends AppCompatActivity {
 
 
-    private TextView tvCoins, tvUserName,tvDiamonds;
+    private TextView tvCoins, tvUserName, tvDiamonds;
     private Player player;
     private static final String TAG = "HomeActivity";
     private CircleImageView imgProfileToolbar;
@@ -58,16 +71,47 @@ public class HomeActivity extends AppCompatActivity {
 
         initUI();
         setToolbar();
-        
-        if(!checkFirstTime()){
+
+        if (!checkFirstTime()) {
             loadData();
+        }
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startService(new Intent(getApplicationContext(), OnlineManagerService.class));
+            createLeaderBoard();
         }
 
 
     }
 
+    public void createLeaderBoard() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, DBClass.urlCreateLeaderboard, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("playerid", player.getPlayerID());
+                params.put("name", player.getUserName());
+                params.put("profileurl", player.getPhotoURL());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+
     private void setPlayerData() {
-        if(player.getPhotoURL()!=null){
+        if (player.getPhotoURL() != null) {
             Picasso.get().load(player.getPhotoURL()).into(imgProfileToolbar);
         }
         tvUserName.setText(player.getUserName());
@@ -83,11 +127,11 @@ public class HomeActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(this, IntroActivity.class));
             return true;
-        }else{
-            if(getIntent().hasExtra(KeyStore.PLAYER_SERIAL)){
+        } else {
+            if (getIntent().hasExtra(KeyStore.PLAYER_SERIAL)) {
                 player = (Player) getIntent().getSerializableExtra(KeyStore.PLAYER_SERIAL);
                 setPlayerData();
-            }else{
+            } else {
                 showLoadingActivity();
             }
             return false;
@@ -96,8 +140,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showLoadingActivity() {
         finish();
-        startActivity(new Intent(this,LaunchLoadingActivity.class));
-        overridePendingTransition(0,0);
+        startActivity(new Intent(this, LaunchLoadingActivity.class));
+        overridePendingTransition(0, 0);
     }
 
     private void initUI() {
@@ -228,7 +272,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     player = dataSnapshot.getValue(Player.class);
-                    DataStore.setCurrentPlayer(player,HomeActivity.this);
+                    DataStore.setCurrentPlayer(player, HomeActivity.this);
                     setPlayerData();
                 }
             }
@@ -247,7 +291,7 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         tvUserName = findViewById(R.id.tb_tvusernameMainCommmon);
         tvCoins = findViewById(R.id.tb_tvcoinsMainCommon);
-        tvDiamonds= findViewById(R.id.tb_tvDiamondsMainCommon);
+        tvDiamonds = findViewById(R.id.tb_tvDiamondsMainCommon);
 
         imgProfileToolbar = findViewById(R.id.img_toolbarProfile);
     }

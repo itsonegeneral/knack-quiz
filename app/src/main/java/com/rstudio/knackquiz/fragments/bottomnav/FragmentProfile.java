@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.rstudio.knackquiz.HomeActivity;
 import com.rstudio.knackquiz.LoginActivity;
 import com.rstudio.knackquiz.R;
+import com.rstudio.knackquiz.RedeemActivity;
 import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.gameplay.QuestionActivity;
 import com.rstudio.knackquiz.helpers.DBKeys;
@@ -125,6 +126,14 @@ public class FragmentProfile extends Fragment {
             llSignInLayout.setVisibility(View.GONE);
             llLoggedInLayout.setVisibility(View.VISIBLE);
         }
+
+        layout.findViewById(R.id.tv_redeemRewardsProfile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, RedeemActivity.class));
+            }
+        });
+
     }
 
     private void getPlayerData() {

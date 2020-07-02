@@ -1,6 +1,8 @@
 package com.rstudio.knackquiz.models;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
     private String id,question,option1,option2,option3,option4;
     private String parentCategory,category,answer,attended,correct,level,adminEmail;
 

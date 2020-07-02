@@ -7,5 +7,8 @@ public class DBClass {
     public static final String urlGetCategories = url + "getcategories";
     public static final String urlGetQuizOptions = url + "getquizoptions";
     public static final String urlGetSubCategories = url + "getsubcategories";
-    public static final String urlSendFriendRequest = testURL +"friends/sendrequest";
+    public static final String urlSendFriendRequest = url +"friends/sendrequest";
+    public static final String urlCreatePaymentRequest = testURL + "payments/createrequest";
+    public static final String urlSetLeaderboard  = testURL + "setleaderboard";
+    public static final String urlCreateLeaderboard = url + "createleaderboard";
 }

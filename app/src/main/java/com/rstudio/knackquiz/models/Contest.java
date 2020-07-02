@@ -1,16 +1,15 @@
 package com.rstudio.knackquiz.models;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Contest implements Serializable {
 
-    private String id, title, startTime, endTime, entryType, rewardType, category, categoryId,hostUserId;
+    private String id, title, startTime, endTime, entryType, rewardType, category, categoryId, hostUserId;
     private int entryValue, rewardValue, questionTime, totalPlayers, winnerCount;
     private ArrayList<String> players = new ArrayList<>();
     private ArrayList<Question> questions = new ArrayList<>();
+    private ArrayList<ContestPlayer> playedPLayers = new ArrayList<>();
 
     public Contest() {
     }
@@ -31,7 +30,20 @@ public class Contest implements Serializable {
         this.id = id;
     }
 
+    public ArrayList<ContestPlayer> getPlayedPLayers() {
+        return playedPLayers;
+    }
+
+    public void setPlayedPLayers(ArrayList<ContestPlayer> playedPLayers) {
+        this.playedPLayers = playedPLayers;
+    }
+
+    public void addPlayedPlayer(ContestPlayer player) {
+        this.playedPLayers.add(player);
+    }
+
     /*
+
     public int getDuration(){
 
     }*/
@@ -40,7 +52,7 @@ public class Contest implements Serializable {
         return players.size();
     }
 
-    public void addPlayer(String playerUserId){
+    public void addPlayer(String playerUserId) {
         this.players.add(playerUserId);
     }
 

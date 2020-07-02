@@ -50,6 +50,22 @@
 
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/muli_bold"
+                android:padding="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Recent"
+                android:textColor="@color/common_google_signin_btn_text_dark" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rView_recentHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
 
         </LinearLayout>
 

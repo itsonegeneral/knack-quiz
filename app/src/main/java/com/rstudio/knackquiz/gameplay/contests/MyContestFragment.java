@@ -25,10 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rstudio.knackquiz.R;
 import com.rstudio.knackquiz.adapters.ContestAdapter;
+import com.rstudio.knackquiz.datastore.DataStore;
 import com.rstudio.knackquiz.helpers.DBKeys;
 import com.rstudio.knackquiz.models.Contest;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MyContestFragment extends Fragment {
 
@@ -70,7 +72,9 @@ public class MyContestFragment extends Fragment {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Contest contest = snapshot.getValue(Contest.class);
-                        contestsList.add(contest);
+                        if (contest.getPlayers().contains(DataStore.getCurrentPlayerID(context))) {
+                            contestsList.add(contest);
+                        }
                     }
 
                     if (contestsList.isEmpty()) {
@@ -94,15 +98,14 @@ public class MyContestFragment extends Fragment {
         contestsList = new ArrayList<>();
         recyclerView = layout.findViewById(R.id.rView_myContests);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        
-        
-        
+
+
         //FAB
         ExtendedFloatingActionButton fab = layout.findViewById(R.id.fab_hostContest);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context,CreateContestActivity.class));
+                startActivity(new Intent(context, CreateContestActivity.class));
             }
         });
 

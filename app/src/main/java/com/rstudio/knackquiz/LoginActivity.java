@@ -89,6 +89,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
+        findViewById(R.id.imgBtn_backLogin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     private void setUpGoogleApi() {
@@ -295,5 +302,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         alertDialog = builder.create();
         alertDialog.show();
     }
+
+
 
 }

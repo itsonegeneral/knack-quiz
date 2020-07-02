@@ -13,7 +13,8 @@ public class Player implements Serializable {
     private String signInType;
     private long coins;
     private long diamonds;
-    private String phone,dob;
+    private String phone,dob,createdOn,lastOnline;
+    private boolean isActive=false;
 
     public Player() {
         coins = 0;
@@ -26,6 +27,30 @@ public class Player implements Serializable {
 
     public String getDob() {
         return dob;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getLastOnline() {
+        return lastOnline;
+    }
+
+    public void setLastOnline(String lastOnline) {
+        this.lastOnline = lastOnline;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public void setDob(String dob) {

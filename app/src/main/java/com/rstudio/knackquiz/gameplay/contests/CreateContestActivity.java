@@ -9,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,6 +45,7 @@ import com.rstudio.knackquiz.helpers.KeyStore;
 import com.rstudio.knackquiz.helpers.RandomString;
 import com.rstudio.knackquiz.models.Category;
 import com.rstudio.knackquiz.models.Contest;
+import com.rstudio.knackquiz.models.Question;
 import com.shawnlin.numberpicker.NumberPicker;
 import com.tiper.MaterialSpinner;
 
@@ -52,11 +55,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
 public class CreateContestActivity extends AppCompatActivity {
+
+    private static final String TAG = "CreateContestActivity";
 
     //Buttons and TextViews
     private Button btDate, btTime, btCreate;
@@ -73,8 +81,10 @@ public class CreateContestActivity extends AppCompatActivity {
 
     private MaterialSpinner spinner;
 
+    private Calendar date = Calendar.getInstance();
     private Contest contest = new Contest();
     private ArrayList<Category> categoryArrayList = new ArrayList<>();
+    private ArrayList<Question> questions = new ArrayList<>();
 
     //Time
     private int mYear, mMonth, mDay, mHour, mMinute, mSeconds;
@@ -94,28 +104,74 @@ public class CreateContestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validateInput()) {
-                    uploadContest();
+                    contest.setCategory(spinner.getSelectedItem().toString());
+                    getQuestions(contest.getCategory());
                 }
             }
         });
 
     }
 
+    private void getQuestions(final String cat) {
+        //   showLoadingAlert();
+        String url = DBClass.urlGetQuestions + "?category=" + cat + "&limit=" + 10;
+        Log.d(TAG, "getQuestions: " + url);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    questions.clear();
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    for (int i = 0; i < array.length(); i++) {
+                        Question question = gson.fromJson(array.getJSONObject(i).toString(), Question.class);
+                        questions.add(question);
+                    }
+                    if (questions.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "No Questions Found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        contest.setQuestions(questions);
+                        uploadContest();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.getLocalizedMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("category", cat);
+                params.put("limit", "10");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+
     private void uploadContest() {
         String key = UUID.randomUUID().toString().replace("-", "").substring(0, 15);
-        String date= tvSelectedDate.getText().toString() + " " + tvSelectedTime.getText().toString();
+        Date fDate = date.getTime();
         contest.setTotalPlayers(Integer.parseInt(etTotalPlayers.getText().toString()));
         contest.setWinnerCount(Integer.parseInt(etWinners.getText().toString()));
         contest.setId(key);
         contest.setEntryType(KeyStore.COIN);
         contest.setRewardType(KeyStore.DIAMOND);
-        contest.setCategory(spinner.getSelectedItem().toString());
         contest.setEntryValue(Integer.parseInt(etEntryCoins.getText().toString()));
         contest.setRewardValue((contest.getEntryValue() / 100) * 90);
-        contest.setStartTime(date);
-        contest.setEndTime(DateHelper.addHourToDate(contest.getStartTime(),durationPicker.getValue()));
+        contest.setStartTime(DateHelper.getFormattedDate(fDate));
+        contest.setEndTime(DateHelper.addHourToDate(contest.getStartTime(), durationPicker.getValue()));
         contest.setQuestionTime(10);
-        contest.addPlayer(FirebaseAuth.getInstance().getCurrentUser().getUid()!=null?FirebaseAuth.getInstance().getCurrentUser().getUid():"kjshdkja");
+        contest.addPlayer(FirebaseAuth.getInstance().getCurrentUser().getUid() != null ? FirebaseAuth.getInstance().getCurrentUser().getUid() : "kjshdkja");
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DBKeys.KEY_CONTESTS);
@@ -125,6 +181,7 @@ public class CreateContestActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Snackbar.make(findViewById(android.R.id.content), "Contest created", Snackbar.LENGTH_SHORT).show();
+                    finish();
                 } else {
 
                 }
@@ -158,6 +215,7 @@ public class CreateContestActivity extends AppCompatActivity {
     }
 
     String[] categories;
+
     private void loadCategories() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, DBClass.urlGetSubCategories, new Response.Listener<String>() {
             @Override
@@ -240,7 +298,7 @@ public class CreateContestActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-
+                        date.set(year, monthOfYear, dayOfMonth);
                         tvSelectedDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                         btDate.setVisibility(View.GONE);
                     }
@@ -252,6 +310,8 @@ public class CreateContestActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        date.set(Calendar.MINUTE, minute);
                         if (hourOfDay < 12) {
                             tvSelectedTime.setText(hourOfDay + ":" + minute + " AM");
                         } else {

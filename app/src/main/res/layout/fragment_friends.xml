@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/DarkAppTheme">
 
-    <androidx.appcompat.widget.SearchView
+
+    <LinearLayout
+        android:id="@+id/ll_loggedInFriendsFragment"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout_friendsFrag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:tabIndicatorColor="@color/colorTextLight"
+            app:tabSelectedTextColor="#fff"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/colorTextLight" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager_friendsFrag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_friendsSignInLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:defaultQueryHint="Search Username" />
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
 
-    <include layout="@layout/view_add_friend_list" />
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_friends_new"
+            android:transitionName="imagetransition" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
+            android:text="Sign in to connect with your friends"
+            android:textColor="@color/colorTextLight"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bt_signinFragFriends"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
+            android:text="Sign in"
+            android:textColor="@color/colorNavBarGreen"
+            app:rippleColor="#92E4B7" />
+
+    </LinearLayout>
+
+</RelativeLayout>

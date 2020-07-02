@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/colorCardPrimaryLight"
+    android:orientation="vertical"
+    android:padding="14dp"
+    android:theme="@style/DarkAppTheme">
+
+
+    <TextView
+        android:id="@+id/tv_TitleAlertDefault"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/muli_bold"
+        android:padding="6dp"
+        android:text="Confirm" />
+
+    <TextView
+        android:id="@+id/tv_MessageAlertDefault"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/muli_bold"
+        android:padding="6dp"
+        android:text="Are you sure to quit the match ?" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_YesAlertDefault"
+            style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="Yes"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/bt_NoAlertDefault"
+            style="@style/Widget.AppCompat.ButtonBar.AlertDialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/muli"
+            android:text="No"
+            android:textAllCaps="false" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

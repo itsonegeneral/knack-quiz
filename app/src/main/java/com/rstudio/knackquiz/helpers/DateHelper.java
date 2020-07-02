@@ -17,11 +17,28 @@ public class DateHelper {
         return format.format(date);
     }
 
-    public static String addHourToDate(String date,int hours){
+    public static String addHourToDate(String date, int hours) {
         Calendar cal = Calendar.getInstance(); // creates calendar
-        cal.setTime(new Date(date)); // sets calendar time/date
+        cal.setTime(new Date(date));
+        String pattern = "EEE MMM dd HH:mm:ss yyyy"; // sets calendar time/date
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date date1 = new Date(date);
         cal.add(Calendar.HOUR_OF_DAY, hours); // adds one hour
-        return cal.getTime().toString();
+        date1 = cal.getTime();
+        return simpleDateFormat.format(date1);
+    }
+
+    public static String getFormattedDate(Date date) {
+        String pattern = "EEE MMM dd HH:mm:ss yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(date);
+    }
+
+    public static String getCurrentFormattedDate() {
+        Date date = new Date();
+        String pattern = "EEE MMM dd HH:mm:ss yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(date);
     }
 
 }
